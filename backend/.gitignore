@@ -1,3 +1,14 @@
 /__pycache__
-/resources
 /venv
+/resources/__pycache__
+/resources/fasttxt
+/resources/ngrams
+/resources/pytorch
+/resources/stop_words
+/resources/lemmatization-es.txt
+/resources/llavebabel.txt
+/resources/sbw_vectors.bin
+/resources/spanish.tagger
+/resources/stanford-postagger-3.8.0.jar
+/resources/SVMModel.sav
+/resources/thesaurus_key.txt

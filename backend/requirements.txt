@@ -1,11 +1,12 @@
 flask
 flask-cors
 requests
-beautifulsoup
+beautifulsoup4
 spacy
+scikit-learn
 nltk
 pyphen
-torch
+torch==1.5
 gensim
 fasttext
 transformers

@@ -60,12 +60,7 @@ def get_complex_words():
                 sentencetags = words[j]
                 for i in range(0, len(sentencetags)):
                     if predictedtags[j][i] == 1:
-                        word = sentencetags[i][4]
                         complex_words.append(sentencetags[i])
-                        # if not word in complex_words:
-                        #     complex_words[word] = [sentencetags[i]]
-                        # else:
-                        #     complex_words[word].append(sentencetags[i])
 
         return jsonify(result=complex_words)
 
