@@ -1,0 +1,23 @@
+<div class="text-form">
+    <form [formGroup]="easierForm" (ngSubmit)="onSubmit()" autocomplete="on">
+      <input type="text" formControlName="text" placeholder="Pon tu texto aquí para leerlo más fácil..."/>
+      <button type="submit">
+        <img src="images/easier-button.svg" alt="Easier" />
+      </button>
+    </form>
+  </div>
+
+
+<!-- <div class="text-form">
+    <form action="./result.html">
+      <div>
+        <label for="easytext">Pon tu texto aquí</label>
+        <textarea
+          placeholder="Pon tu texto aquí para leerlo más fácil..."
+        ></textarea>
+      </div>
+      <button type="submit">
+        <img src="images/easier-button.svg" alt="Easier" />
+      </button>
+    </form>
+  </div> -->

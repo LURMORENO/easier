@@ -1,0 +1,57 @@
+<div class="result">
+    <div class="result_dictionary">
+      
+      <div class="result_dictionary__help" *ngIf="!selected; else elseBlock">
+        <div class="result_dictionary__help__icon">
+          <img src="images/question.svg" alt="Ayuda" />
+        </div>
+        <div class="result_dictionary__help__text">
+          Elige una <span class="result_dictionary__help__text__word">palabra</span> de tu
+          texto que no entiendas y te la explicamos.
+        </div>
+      </div>
+      <ng-template #elseBlock>
+        <div class="result_dictionary__content">
+          <div class="result_dictionary__head">
+            <img class="result_dictionary__head__back" src="../../../assets/back.svg" alt="Back" />
+          </div>
+
+          <h3 class="result_dictionary__head__word" id="result_dictionary__head__word">
+            {{ word }}
+          </h3>
+
+          <div class="result_dictionary__head__avatar">
+            <img src="../../../assets/avatar.svg" alt="Avatar" />
+          </div>
+
+          <div class="sinonimos">
+            <ul class="result_dictionary__head__synonyms">
+              <li *ngFor="let synonym of synonyms;">
+                {{synonym}}
+              </li>
+            </ul>
+          </div>
+
+          <div class="result_dictionary__rae">
+            <div class="result_dictionary__rae__logo">
+              <img *ngIf="source==='rae'; else elseImg" src="../../../assets/dle.jpg" alt="Diccionario rae">
+              <ng-template #elseImg>
+                <img src="../../../assets/easy.svg" alt="Diccionario fácil">
+              </ng-template>
+            </div>
+            <div class="result_dictionary__text">
+              {{definition}}
+            </div>
+          </div>
+
+        </div>
+      </ng-template>
+
+    </div>
+
+    <div class="result_text">
+      <h2>Tu texto es:</h2>
+      <p id="text">{{text}}</p>
+    </div>
+
+  </div>
