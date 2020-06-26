@@ -1,0 +1,12 @@
+flask
+flask-cors
+requests
+beautifulsoup
+spacy
+nltk
+pyphen
+torch
+gensim
+fasttext
+transformers
+inflector
