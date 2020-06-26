@@ -283,6 +283,3 @@ def get_lemma():
         lemma = text2tokens.lematizar(word)
 
         return jsonify(result=lemma)
-
-if __name__ == "__main__":
-    app.run(debug=True)

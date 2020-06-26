@@ -5,6 +5,7 @@ beautifulsoup4
 spacy
 scikit-learn
 nltk
+pandas
 pyphen
 torch==1.5
 gensim
