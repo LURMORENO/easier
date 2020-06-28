@@ -200,6 +200,10 @@
     font-weight: 700;
     text-decoration: underline;
   }
+
+  .result_dictionary__content {
+    width: 100%;
+  }
   
   .result_dictionary__head {
     position: relative;
@@ -252,7 +256,6 @@
     font-weight: normal;
     text-align: center;
     color: var(--dark-blue);
-    white-space: nowrap;
   }
   
   .result_dictionary__head__synonyms li {

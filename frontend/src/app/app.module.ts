@@ -14,6 +14,9 @@ import { IndexComponent } from './modules/index/index.component';
 import { HeaderComponent } from './modules/header/header.component';
 import { FooterComponent } from './modules/footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ProjectComponent } from './modules/project/project.component';
+import { ContactComponent } from './modules/contact/contact.component';
+import { AccessibilityComponent } from './modules/accessibility/accessibility.component';
 
 
 @NgModule({
@@ -22,7 +25,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ResultComponent,
     IndexComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    ProjectComponent,
+    ContactComponent,
+    AccessibilityComponent
   ],
   imports: [
     BrowserModule,

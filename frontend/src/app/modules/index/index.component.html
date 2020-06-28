@@ -1,23 +1,40 @@
-<div class="text-form">
-    <form [formGroup]="easierForm" (ngSubmit)="onSubmit()" autocomplete="on">
-      <input type="text" formControlName="text" placeholder="Pon tu texto aquí para leerlo más fácil..."/>
-      <button type="submit">
-        <img src="images/easier-button.svg" alt="Easier" />
-      </button>
-    </form>
-  </div>
+<div class="index_tutorial">
+  <h5>
+    ¿Qué es easier?
+  </h5>
+  <p>
+    easier es una aplicación que te va a ayudar a entender las palabras
+    difíciles. 
+  </p>
+  <h5>
+    ¿Cómo funciona easier?
+  </h5>
+  <p>
+    Copia tu texto en el cuadro de abajo. 
+  <br>
+    Pulsa el botón para ver las palabras difíciles. 
+  </p>
+</div>
 
 
 <!-- <div class="text-form">
-    <form action="./result.html">
-      <div>
-        <label for="easytext">Pon tu texto aquí</label>
-        <textarea
-          placeholder="Pon tu texto aquí para leerlo más fácil..."
-        ></textarea>
-      </div>
-      <button type="submit">
-        <img src="images/easier-button.svg" alt="Easier" />
-      </button>
-    </form>
-  </div> -->
+  <form [formGroup]="easierForm" (ngSubmit)="onSubmit()" autocomplete="on">
+    <input type="text" formControlName="text" placeholder="Pon tu texto aquí para leerlo más fácil..."/>
+    <button type="submit">
+      <img src="images/easier-button.svg" alt="Easier" />
+    </button>
+  </form>
+</div> -->
+
+<div class="text-form">
+  <form [formGroup]="easierForm" (ngSubmit)="onSubmit()" autocomplete="on">
+    <div>
+      <textarea formControlName="text" required
+        placeholder="Pon tu texto aquí."
+      ></textarea>
+    </div>
+    <button type="submit">
+      <!-- <i class="far fa-hand-pointer"></i> -->
+    </button>
+  </form>
+</div>

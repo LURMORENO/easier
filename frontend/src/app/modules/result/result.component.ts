@@ -1,8 +1,6 @@
-import { Component, OnInit, Pipe, PipeTransform, Sanitizer, SecurityContext, AfterViewInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { MainService } from 'src/app/services/main.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { element } from 'protractor';
 
 
 @Component({
@@ -27,8 +25,8 @@ export class ResultComponent implements OnInit {
    }
 
   ngOnInit() {
-    // this.text = history.state.text
-    this.text ="En cada barrio de España hay una Sole. Esa mujer que habla con todo el mundo, que conoce hasta al que aún no vive allí. La que siempre está para saludarte. Da igual dónde estés, ahí te encontrarás a la Sole. No muy lejos anda Paco, el vecino que tampoco falta en un distrito. Siempre quejándose, malhumorado….pero muy cotilla pese a que sus ademanes sean educados y discretos. Ambos están haciendo teatro en un taller de interpretación, “la vida misma sobre un escenario” resumen estos dos jóvenes que gesticulan hasta los años con una mueca de felicidad, “¡80 y tantos y subiendo¡”. Sole y Paco no han conocido a Aristóteles pero sí una de sus mejores reflexiones cuando decía que en los teatros griegos se producía una catarsis que purifcaba a los pacientes, depuraba los desarreglos morales y curaba las enfermedades del alma. “Quiero hacer teatro porque me gustaría hacer algo por mí y por los demás, por mejorar y superarme”. Esta es la contestación más habitual cuando uno es preguntando sobre las motivaciones que le llevan a subir a un escenario."
+    this.text = history.state.text
+    // this.text ="En cada barrio de España hay una Sole. Esa mujer que habla con todo el mundo, que conoce hasta al que aún no vive allí. La que siempre está para saludarte."
     this.getComplexWords(this.text)
   }
 
