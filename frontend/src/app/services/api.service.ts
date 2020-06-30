@@ -125,6 +125,22 @@ export class ApiService {
     })
   }
 
+  getPictogram(word: string):Promise<string>{
+    return new Promise<string>((resolve, reject) => {
+      try {
+        this.http.get(this.url+'/pictogram', {
+          params: {
+            word: word
+          }
+        }).subscribe((result => {
+          resolve(result['result'])
+        }))
+      } catch (error) {
+        reject(error)
+      }
+    })
+  }
+
   getLemma(word: string):Promise<string>{
     return new Promise<string>((resolve, reject) => {
       try {

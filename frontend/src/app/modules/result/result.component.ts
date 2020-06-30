@@ -18,6 +18,7 @@ export class ResultComponent implements OnInit {
   definition: string
   result: any
   source: string
+  pictogram: string
 
   constructor(private mainService: MainService, private sanitizer: DomSanitizer) {
     this.complexWords = new Array()
@@ -67,6 +68,10 @@ export class ResultComponent implements OnInit {
     let complex_word = this.complexWords.find((element => element[4] == word))
     let result = await this.mainService.api.getDefinition(word, complex_word[1])
     this.synonyms = await this.mainService.api.getSynonyms(word, complex_word)
+    this.pictogram = await this.mainService.api.getPictogram(word)
+    if(! this.pictogram){
+      this.pictogram = null
+    }
     this.word = word
     this.definition = result['definition']
     this.source = result['source']

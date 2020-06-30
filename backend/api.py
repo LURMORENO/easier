@@ -267,7 +267,7 @@ def get_pictogram():
                             page = requests.get(url = 'http://www.arasaac.org/' + href)
                             soup = BeautifulSoup(page.text, 'html.parser')
                             url = soup.find(id="principal").find(class_='image')['src']
-                            url = 'www/arasaac.org/' + url
+                            url = 'http://www.arasaac.org/' + url
                             return jsonify(result=url)
                     return jsonify(result='')
             except:

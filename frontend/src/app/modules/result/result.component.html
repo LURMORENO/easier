@@ -19,9 +19,10 @@
           <h3 class="result_dictionary__head__word" id="result_dictionary__head__word">
             {{ word }}
           </h3>
-
+          
           <div class="result_dictionary__head__avatar">
-            <img src="../../../assets/avatar.svg" alt="Avatar" />
+            <img *ngIf="pictogram==null" src="../../../assets/avatar.svg" alt="Avatar" />
+            <img *ngIf="pictogram!=null" src='{{pictogram}}' alt='Arasaac'>
           </div>
 
           <div class="sinonimos">
