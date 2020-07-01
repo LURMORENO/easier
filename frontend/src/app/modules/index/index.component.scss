@@ -107,19 +107,19 @@
 
     /* INDEX TUTORIAL */
   .index_tutorial {
+    color: var(--dark-blue);
     background-color: var(--light-blue);
     font-size: medium;
   }
 
-  .index_tutorial h5 {
+  .index_tutorial h2 {
     font-weight: bold;
     font-size: x-large;
   }
 
-  .index_tutorial p, h5 {
-    color: var(--dark-blue);
+  .index_tutorial #text{
+    font-weight: normal;
   }
-
   
   /* FORM */
   .text-form {
@@ -157,10 +157,12 @@
     margin: 20px auto 0;
     padding: 15px 30px;
     background: var(--dark-blue);
-    border: 0;
     border-radius: 50px;
-    outline: 0;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .text-form button:focus {
+    outline: black solid 2px;
   }
   
   .text-form button img {

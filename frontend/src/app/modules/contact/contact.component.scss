@@ -9,6 +9,8 @@ p {
     text-align: left;
 }
 
-img {
-    float: left;
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }

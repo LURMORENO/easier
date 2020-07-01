@@ -19,6 +19,7 @@ export class ResultComponent implements OnInit {
   result: any
   source: string
   pictogram: string
+  loading: boolean = true
 
   constructor(private mainService: MainService, private sanitizer: DomSanitizer) {
     this.complexWords = new Array()
@@ -62,6 +63,7 @@ export class ResultComponent implements OnInit {
     if(! this.selected){
       this.selected = true
     }
+    this.loading = true
     // Buscar la palabra compleja dentro de la lista
     // Modificar la palabra, sinonimos, definicion y pictograma que se muestra
     word = word.split(' ')[0]
@@ -75,6 +77,7 @@ export class ResultComponent implements OnInit {
     this.word = word
     this.definition = result['definition']
     this.source = result['source']
+    this.loading = false
   }
 
   isMobile() {

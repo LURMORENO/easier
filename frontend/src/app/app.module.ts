@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 // Angular Material
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner'; 
 
 // Request
 import { HttpClientModule } from '@angular/common/http';
@@ -36,7 +37,8 @@ import { AccessibilityComponent } from './modules/accessibility/accessibility.co
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
