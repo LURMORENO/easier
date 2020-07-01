@@ -92,6 +92,25 @@ a:hover {
   font-size: 0.85rem;
 }
 
+.menu li {
+  float: left;
+  border-right: 1px solid white;
+}
+
+.menu li a {
+  display: block;
+  text-align: center;
+}
+
+.menu li:first-child {
+  border-radius: 15px 0 0 15px;
+}
+
+.menu li:last-child {
+  border-right: none;
+  border-radius: 0 15px 15px 0;
+}
+
 .menu .active {
   background: var(--dark-blue);
   color: var(--light-blue)
@@ -437,9 +456,7 @@ a:hover {
   .menu li:last-child {
     border-right: none;
     border-radius: 0 15px 15px 0;
-  }
-
-  
+  }  
 
   /* LOGO */
   .logo {
