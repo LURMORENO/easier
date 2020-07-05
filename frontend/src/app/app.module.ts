@@ -18,6 +18,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProjectComponent } from './modules/project/project.component';
 import { ContactComponent } from './modules/contact/contact.component';
 import { AccessibilityComponent } from './modules/accessibility/accessibility.component';
+import { DownloadComponent } from './modules/download/download.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { AccessibilityComponent } from './modules/accessibility/accessibility.co
     FooterComponent,
     ProjectComponent,
     ContactComponent,
-    AccessibilityComponent
+    AccessibilityComponent,
+    DownloadComponent
   ],
   imports: [
     BrowserModule,

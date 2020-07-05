@@ -16,26 +16,16 @@
   </h2>
 </div>
 
-
-<!-- <div class="text-form">
-  <form [formGroup]="easierForm" (ngSubmit)="onSubmit()" autocomplete="on">
-    <input type="text" formControlName="text" placeholder="Pon tu texto aquí para leerlo más fácil..."/>
-    <button type="submit">
-      <img src="images/easier-button.svg" alt="Easier" />
-    </button>
-  </form>
-</div> -->
-
 <div class="text-form">
   <form [formGroup]="easierForm" (ngSubmit)="onSubmit()" autocomplete="on">
     <div>
-      <label for="Textbox"></label>
-      <textarea formControlName="text" name="Textbox"required
+      <label for="Textbox">Texto a simplificar</label>
+      <textarea formControlName="text" id="Textbox" required
         placeholder="Pon tu texto aquí."
       ></textarea>
     </div>
     <button type="submit" alt="Botón easier" tabindex="0">
-      <!-- <i class="far fa-hand-pointer"></i> -->
+      easier
     </button>
   </form>
 </div>

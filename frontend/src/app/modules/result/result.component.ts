@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MainService } from 'src/app/services/main.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Word } from 'src/app/data/word';
 
 
 @Component({
@@ -13,22 +14,18 @@ export class ResultComponent implements OnInit {
   text: string
   complexWords: Array<any>
   selected: boolean = false
-  word:string 
-  synonyms: Array<string>
-  definition: string
-  result: any
-  source: string
-  pictogram: string
+  word: Word
   loading: boolean = true
+  showResultText: boolean = true
 
   constructor(private mainService: MainService, private sanitizer: DomSanitizer) {
     this.complexWords = new Array()
-    this.synonyms = new Array()
+    this.word = new Word()
    }
 
   ngOnInit() {
-    this.text = history.state.text
-    // this.text ="En cada barrio de España hay una Sole. Esa mujer que habla con todo el mundo, que conoce hasta al que aún no vive allí. La que siempre está para saludarte."
+    // this.text = history.state.text
+    this.text ="En cada barrio de España hay una Sole. Esa mujer que habla con todo el mundo, que conoce hasta al que aún no vive allí. La que siempre está para saludarte."
     this.getComplexWords(this.text)
   }
 
@@ -54,6 +51,10 @@ export class ResultComponent implements OnInit {
     words.forEach(word => {
       word.addEventListener("click", () => {
         this.toggleDictionary(word.textContent, event);
+        if(this.isMobile()){
+          this.showResultText = false
+          console.log(this.showResultText)
+        }
       });
     });
   }
@@ -69,15 +70,20 @@ export class ResultComponent implements OnInit {
     word = word.split(' ')[0]
     let complex_word = this.complexWords.find((element => element[4] == word))
     let result = await this.mainService.api.getDefinition(word, complex_word[1])
-    this.synonyms = await this.mainService.api.getSynonyms(word, complex_word)
-    this.pictogram = await this.mainService.api.getPictogram(word)
-    if(! this.pictogram){
-      this.pictogram = null
+    this.word.synonyms = await this.mainService.api.getSynonyms(word, complex_word)
+    this.word.pictogram = await this.mainService.api.getPictogram(word)
+    if(! this.word.pictogram){
+      this.word.pictogram = null
     }
-    this.word = word
-    this.definition = result['definition']
-    this.source = result['source']
+    this.word.word = word
+    this.word.definition = result['definition']
+    this.word.source = result['source']
     this.loading = false
+  }
+
+  goBack(){
+    //Ocultar la información de la palabra y mostar el texto de nuevo
+    this.showResultText = true
   }
 
   isMobile() {
