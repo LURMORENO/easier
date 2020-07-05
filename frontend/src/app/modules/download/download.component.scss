@@ -1,0 +1,24 @@
+h1 {
+    padding-left: 10px;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    line-height: 1.5rem;
+    font-family: "Rubik", sans-serif;
+    font-size: large;
+    font-weight: 400;
+    color: #212529;
+    text-align: left;
+    padding-left: 10px;
+}
+
+::ng-deep .word {
+    position: relative;
+    font-weight: 700;
+    color:#00008B;
+    background-color: #E0FFFF;
+    cursor: pointer;
+    text-decoration: underline;
+  }
