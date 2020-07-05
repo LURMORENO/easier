@@ -1,0 +1,27 @@
+html, body {
+    width: 100px;
+    font-family: "Rubik", sans-serif;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  .button {
+    margin: 3% auto;
+    padding: 4px;
+    text-align: center;
+    font-size: auto;
+    cursor: pointer;
+  }
+  
+  .easier:hover {
+    background-color: #004996;
+    color: #ebf1f7;
+  }
+  
+  .easier {
+    background-color: #ebf1f7;
+    color: #004996;
+  }
+  

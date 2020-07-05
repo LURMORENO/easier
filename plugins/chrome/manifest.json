@@ -19,7 +19,7 @@
     ],
 
     "background": {
-      "scripts": ["background.js"]
+      "scripts": ["background.js", "popup/menu.js"]
     },
 
     "content_scripts": [
@@ -33,6 +33,8 @@
       "default_icon": {
         "16": "icons/favicon.png",
         "32": "icons/favicon.png"
-      }
+      },
+      "default_title": "easier",
+      "default_popup": "popup/menu.html"
     }
   }

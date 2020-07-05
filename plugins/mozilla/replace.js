@@ -12,44 +12,37 @@
  * @param  {Node} node    - The target DOM Node.
  * @return {void}         - Note: the emoji substitution is done inline.
  */
-function replaceText (node, word) {
+function replaceText (node, tuple) {
   if (node.nodeType === Node.TEXT_NODE) {
     if (node.parentNode &&
         node.parentNode.nodeName === 'TEXTAREA') {
       return;
     }
-      if(node.parentElement.nodeName === 'P'){
-        let content = node.parentElement.innerHTML;
-      let regex = new RegExp(word.original_word, 'i');
-      content = content.replace(regex, "<span class=tooltip>"+word.original_word+" <span class=tooltiptext>"+word.synonyms[0]+"</span></span>");
+    if(node.parentElement.nodeName === 'P'){
+      let content = node.parentElement.innerHTML;
+      let regex = new RegExp(`\\b${tuple.word}\\b`, 'i');
+      content = content.replace(regex, `<div class=tooltip>${tuple.word} <span class=tooltiptext>${tuple.synonym}</span></div>`);
       node.parentElement.innerHTML = content;
-      }
+    }
   }
   else {
     for (let i = 0; i < node.childNodes.length; i++) {
-      replaceText(node.childNodes[i], word);
+      replaceText(node.childNodes[i], tuple);
     }    
   }
 }
-  
-  
+
     /**
      * Listen for messages from the background script.
      * Call "beastify()" or "reset()".
     */
-    browser.runtime.onMessage.addListener((message) => {
-      if (message.command === "beastify") {
-        for (word of message.result) {
-          replaceText(document.body, word)
-        }
-
-        console.log("Finish")
-        
+   browser.runtime.onMessage.addListener((message) => {
+      if (message.command === "replace") {
+        replaceText(document.body, message.tuple)       
 
       } else if (message.command === "reset") {
         console.log("reset")
       }
     });
   
-  })();
-  
+})(); 
