@@ -388,7 +388,8 @@
 
   ::ng-deep .word {
     position: relative;
-    font-weight: 700;
+    display: inline-block;
+    font-weight: bold;
     color:#00008B;
     background-color: #E0FFFF;
     cursor: pointer;

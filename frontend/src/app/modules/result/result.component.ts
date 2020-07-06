@@ -41,7 +41,7 @@ export class ResultComponent implements OnInit {
   replaceComplexWords(word: string, synonym?: string){
     let text = document.querySelector("#text");
     let regex = new RegExp(`\\b${word}\\b`, 'gi');
-    text.innerHTML = text.innerHTML.replace(regex, `<span class=word>${word} <span class=wordtext>${synonym}</span></span>`)
+    text.innerHTML = text.innerHTML.replace(regex, `<div class=word>${word} <span class=wordtext>${synonym}</span></div>`)
     // this.sanitizer.bypassSecurityTrustHtml(text)    
   }
 
