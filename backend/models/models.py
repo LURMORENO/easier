@@ -9,30 +9,30 @@ class Config(object):
     def __init__(self):
         self.clasificadorobj = clasificador()
         
-        self.unigrams = {}
-        self.totalUnis = 1
-        self.maxValue = 1
+        # self.unigrams = {}
+        # self.totalUnis = 1
+        # self.maxValue = 1
         
-        self.bigrams = {}
-        self.totalBis = 1
+        # self.bigrams = {}
+        # self.totalBis = 1
 
-        self.trigrams = {}
-        self.totalTris = 1
+        # self.trigrams = {}
+        # self.totalTris = 1
 
-        # path = '../easier/resources/ngrams/vocab_cs.wngram'
-        # self.unigrams = self.clasificadorobj.loadDic(path)
-        # self.totalUnis = sum(self.unigrams.values())
-        # self.maxValue = max(self.unigrams.values())
-        # path = '../easier/resources/ngrams/2gm-0005.wngram'
-        # self.bigrams = self.clasificadorobj.loadDic(path)
-        # self.totalBis = sum(self.bigrams.values())
-        # path = '../easier/resources/ngrams/3gm-0006.wngram'
-        # self.trigrams = self.clasificadorobj.loadDic(path)
-        # self.totalTris = sum(self.trigrams.values())
+        path = '../backend/resources/ngrams/vocab_cs.wngram'
+        self.unigrams = self.clasificadorobj.loadDic(path)
+        self.totalUnis = sum(self.unigrams.values())
+        self.maxValue = max(self.unigrams.values())
+        path = '../backend/resources/ngrams/2gm-0005.wngram'
+        self.bigrams = self.clasificadorobj.loadDic(path)
+        self.totalBis = sum(self.bigrams.values())
+        path = '../backend/resources/ngrams/3gm-0006.wngram'
+        self.trigrams = self.clasificadorobj.loadDic(path)
+        self.totalTris = sum(self.trigrams.values())
 
 	    # DICCIONARIOE2R
-        # path = '../backend/resources/stop_words/unigram2_non_stop_words.csv'
-        # self.uniE2R = self.clasificadorobj.loadDic3(path)
+        path = '../backend/resources/stop_words/unigram2_non_stop_words.csv'
+        self.uniE2R = self.clasificadorobj.loadDic3(path)
         self.uniE2R = {}
 
         # Diccionario babel
