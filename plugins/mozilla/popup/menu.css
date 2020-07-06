@@ -1,18 +1,20 @@
 html, body {
-    width: 100px;
-    font-family: "Rubik", sans-serif;
-  }
+  font-size: medium;
+  font-family: "Rubik", sans-serif;
+}
   
   .hidden {
     display: none;
   }
   
   .button {
+    width: auto;
     margin: 3% auto;
     padding: 4px;
     text-align: center;
     font-size: auto;
     cursor: pointer;
+    white-space: nowrap;
   }
   
   .easier:hover {
