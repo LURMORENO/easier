@@ -14,6 +14,10 @@ p {
     padding-left: 10px;
 }
 
+#dot:before {
+    content:"• ";
+}
+
 ::ng-deep .word {
     position: relative;
     font-weight: 700;

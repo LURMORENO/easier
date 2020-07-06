@@ -109,15 +109,13 @@
   .index_tutorial {
     color: var(--dark-blue);
     background-color: var(--light-blue);
-    font-size: medium;
   }
 
-  .index_tutorial h2 {
+  .index_tutorial h1 {
     font-weight: bold;
-    font-size: x-large;
   }
 
-  .index_tutorial #text{
+  .index_tutorial p{
     font-weight: normal;
     font-size: large;
   }
@@ -150,7 +148,7 @@
     border: 2px dashed black;
     border-radius: 8px;
     outline: 0;
-    font-size: x-large;
+    font-size: large;
   }
   
   .text-form button {
@@ -425,16 +423,15 @@
     /* INDEX TUTORIAL */
     .index_tutorial {
       background-color: var(--light-blue);
-      font-size: medium;
-    }
-
-    .index_tutorial h5 {
-      font-weight: bold;
-      font-size: x-large;
-    }
-
-    .index_tutorial p, h5 {
       color: var(--dark-blue);
+    }
+
+    .index_tutorial h1 {
+      font-weight: bold;
+    }
+
+    .index_tutorial p {
+      font-size: large;
     }
 
     /* FORM */
