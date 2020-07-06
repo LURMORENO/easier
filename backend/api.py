@@ -283,3 +283,71 @@ def get_lemma():
         lemma = text2tokens.lematizar(word)
 
         return jsonify(result=lemma)
+
+
+@app.route('/api/synonyms-v2', methods=['GET'])
+def get_synonyms_v2():
+    if request.method == 'GET':
+        word = request.args.get('word')
+        sentencetags = request.args.get('sentencetags')
+        sentencetags = json.loads(sentencetags)
+
+        # metodo que obtiene los sinonimos de una palabra
+        dis2 = 0
+        synonims = list()
+        synonimsb = config.diccionario_babel.babelsearch(word)
+        synonims_final = list()
+
+        if len(config.dictionario_palabras.SSinonimos(word)):
+            if str(word[len(word) - 5:]) == 'mente':
+                stem = word.replace("mente", "")
+                synonims = config.dictionario_palabras.SSinonimos(stem)
+            else:
+                stem = config.lematizador.lemmatize(word)
+                synonims = config.dictionario_palabras.SSinonimos(stem)
+
+        if not synonims:
+            synonims = config.dictionario_palabras.SSinonimos(word)
+            stem = word
+    
+        synonims_total = list(synonims + synonimsb)
+        dic_synonims = dict.fromkeys(synonims_total)
+
+        for candidate in dic_synonims.keys():
+            candidatesentencetags = list(sentencetags)
+            candidatesentencetags[4] = str(candidate)
+            candidatelen = len(candidate)
+            wordlen = len(word)
+            candidatesentencetags[3] = candidatesentencetags[2] + candidatelen
+            candidatesentencetags[1] = str(candidatesentencetags[1])[
+                :candidatesentencetags[2]] + str(candidate) + \
+                candidatesentencetags[1][
+                candidatesentencetags[2] + wordlen:]
+
+            listcandidatesentencetags = list()
+            listcandidatesentencetags.append(candidatesentencetags)
+
+            candidatematrix = config.clasificadorobj.getMatrix_Deploy(listcandidatesentencetags, config.trigrams, config.totalTris, config.bigrams, config.unigrams, config.totalBis, config.totalUnis, config.uniE2R)
+            candidatepredictedtag = config.clasificadorobj.SVMPredict(candidatematrix)
+    
+            # Buscar el sinonimo optimo
+            dis1 = config.clasificadorobj.word2vector.similarity(candidate, word)
+            window = config.clasificadorobj.getWindow(word, sentencetags[1], sentencetags[2])
+            diswindow1 = config.clasificadorobj.word2vector.similarity(window[1], candidate)
+            diswindow2 = config.clasificadorobj.word2vector.similarity(window[2], candidate)
+            dis3 = dis1 + diswindow1 + diswindow2
+
+            if dis2 < dis3 and word != candidate.lower() and candidatepredictedtag[0] != 1:
+                dis2 = dis3
+                wordreplace = candidatesentencetags[4]
+                if wordreplace:
+                    synonims_final.append(wordreplace)
+
+        # Si se ha encontrado al menos un sinonimo se devuelven los 3 mas significativos            
+        if len(synonims_final) > 0:
+            return jsonify(result=synonims_final[:3])
+        # Si no se ha encontrado ningun sinonimo se devuelve una lista con
+        # la palabra original
+        else:
+            synonims_final.append(word)
+            return jsonify(result=synonims_final)

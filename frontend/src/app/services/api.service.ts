@@ -32,7 +32,7 @@ export class ApiService {
   getSynonyms(word: string, sentencetags): Promise<any>{
     return new Promise<any>((resolve, reject) => {
       try {
-        this.http.get(this.url+'/synonyms', {
+        this.http.get(this.url+'/synonyms-v2', {
           params: {
             word: word,
             sentencetags: JSON.stringify(sentencetags)
