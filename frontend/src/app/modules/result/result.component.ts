@@ -24,8 +24,7 @@ export class ResultComponent implements OnInit {
    }
 
   ngOnInit() {
-    // this.text = history.state.text
-    this.text ="En cada barrio de España hay una Sole. Esa mujer que habla con todo el mundo, que conoce hasta al que aún no vive allí. La que siempre está para saludarte."
+    this.text = history.state.text
     this.getComplexWords(this.text)
   }
 
