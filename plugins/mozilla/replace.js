@@ -5,12 +5,11 @@
     window.hasRun = true;
 
     /**
- * Substitutes emojis into text nodes.
- * If the node contains more than just text (ex: it has child nodes),
- * call replaceText() on each of its children.
+ * Substituir palabras complejas por un tooltip y un sinonimo.
  *
- * @param  {Node} node    - The target DOM Node.
- * @return {void}         - Note: the emoji substitution is done inline.
+ * @param  {Node} node    - Nodo del DOM.
+ * @param {Tuple} tuple   - Tupla {palabra, sinonimo}
+ * @return {void}         
  */
 function replaceText (node, tuple) {
   if (node.nodeType === Node.TEXT_NODE) {
@@ -33,8 +32,7 @@ function replaceText (node, tuple) {
 }
 
     /**
-     * Listen for messages from the background script.
-     * Call "beastify()" or "reset()".
+     * Escucha los mensajes que le llegan del background script.
     */
    browser.runtime.onMessage.addListener((message) => {
       if (message.command === "replace") {
