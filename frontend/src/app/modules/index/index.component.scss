@@ -132,7 +132,7 @@
   
   .text-form div {
     width: 90%;
-    margin: 0 auto;
+    margin-left: 1%;
   }
   
   .text-form form {
@@ -219,9 +219,6 @@
   .result_dictionary__help__text__word {
     font-weight: 700;
     text-decoration: underline;
-  }
-  
-  .result_dictionary__content {
   }
   
   .result_dictionary__head {
@@ -440,6 +437,10 @@
     .text-form {
       flex: 0;
       margin-top: 30px;
+    }
+
+    .text-form div {
+      margin: 0 auto;
     }
   
     .text-form form {
