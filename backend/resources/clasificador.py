@@ -11,7 +11,7 @@ import string
 
 from resources.Pyphen import Pyphen
 from resources.word2vec import word2vec
-from resources.FastText import FastText
+#from resources.FastText import FastText
 import pandas as pd
 import os
 
@@ -28,12 +28,13 @@ class clasificador:
         self.scaled = 10 ** 6
         # a function to count the number of syllables
         self.word2vector = word2vec()
-        self.Fasttextvector=FastText()
+        #self.Fasttextvector=FastText()
         self.Pyphenobj=Pyphen()
         self.x=0
         self.y=0
         self.data = []
         self.model = self.SVMLoad()
+        self.model2 = self.SVMLoad2()
 
     def loadDic(self, path):
         dic = {}
@@ -341,7 +342,7 @@ class clasificador:
                 prob2 = 0
                 trigramR = word + ' ' + w1 + ' ' + w2
                 prob2 = self.getProbability(trigramR, trigrams, totalTris)
-                wordvector = self.Fasttextvector.wordvector(word)
+                #wordvector = self.Fasttextvector.wordvector(word)
                 word2vector=self.word2vector.wordvector(word)
                 word2vectortemp=pd.Series(word2vector)
                 E2R = self.E2RDic(E2Rgram, word)
@@ -367,7 +368,7 @@ class clasificador:
 
                 vector_fet = np.arange(numFeatures)
                 prob = self.getProbMultiUnigram(word, unigrams, totalUnis)
-                wordvector = self.Fasttextvector.wordvector(word)
+                #wordvector = self.Fasttextvector.wordvector(word)
                 word2vector=self.word2vector.wordvector(word)
                 word2vectortemp=pd.Series(word2vector)
                 E2R = self.E2RDic(E2Rgram, word)
@@ -404,6 +405,10 @@ class clasificador:
         predicted = self.model.predict(matrix_deploy)
         return predicted
 
+    def SVMPredict2(self, matrix_deploy):
+        predicted = self.model2.predict(matrix_deploy)
+        return predicted
+
     def SVMEvaluation(self, y_dev, X_dev):
         # obtenemos precision, recall y f1 comparando el gold standard (y_dev) con las predicciones
         predicted = self.model.predict(X_dev)
@@ -416,6 +421,10 @@ class clasificador:
 
     def SVMLoad(self):
         filename = "../backend/resources/SVMModel.sav"
+        return pickle.load(open(filename, 'rb'))
+
+    def SVMLoad2(self):
+        filename = "../backend/resources/SVMModelbea.sav"
         return pickle.load(open(filename, 'rb'))
 
     def asignarDic(self,path):

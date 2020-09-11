@@ -39,10 +39,12 @@ CORS(app)
 def get_complex_words():
     if request.method == 'GET':
         text = request.args.get('text')
+        flag = request.args.get('flag')
 
         words = list()
         complex_words = list()
-        sentencelist = text2tokens.text2sentences(text)
+        
+        sentencelist =  text2tokens.text2sentences(text)
         words = [text2tokens.sentence2tokens(sentence) for sentence in sentencelist]
         predictedtags = list()
 
@@ -53,16 +55,24 @@ def get_complex_words():
                         config.clasificadorobj.getMatrix_Deploy(sentencetags, config.trigrams,config.totalTris, 
                         config.bigrams, config.unigrams, config.totalBis,
                         config.totalUnis, config.uniE2R) for sentencetags in words]
-                        
-            predictedtags = [config.clasificadorobj.SVMPredict(rowdeploy) for rowdeploy in matrix_deploy]
+            if flag=='1':
+                predictedtags = [config.clasificadorobj.SVMPredict(rowdeploy) for rowdeploy in matrix_deploy]
+                print("entro en primero")
+            elif flag=='0':
+                predictedtags = [config.clasificadorobj.SVMPredict2(rowdeploy) for rowdeploy in matrix_deploy]
+                print("entro en segundo")
 
         for j in range(0, len(words)):
                 sentencetags = words[j]
                 for i in range(0, len(sentencetags)):
                     if predictedtags[j][i] == 1:
+                        print("compleja"+" "+sentencetags[i][4])
                         complex_words.append(sentencetags[i])
+                    elif predictedtags[j][i] == 0:
+                        print("simple"+" "+sentencetags[i][4])
 
         return jsonify(result=complex_words)
+
 
 @app.route('/api/disambiguate', methods=['GET'])
 def get_disambiguate():

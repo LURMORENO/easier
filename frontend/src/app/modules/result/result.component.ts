@@ -12,6 +12,7 @@ import { Word } from 'src/app/data/word';
 export class ResultComponent implements OnInit {
 
   text: string
+  flag:string
   complexWords: Array<any>
   selected: boolean = false
   word: Word
@@ -25,11 +26,13 @@ export class ResultComponent implements OnInit {
 
   ngOnInit() {
     this.text = history.state.text
-    this.getComplexWords(this.text)
+    this.flag=history.state.flag
+    this.getComplexWords(this.text,this.flag)
+
   }
 
-  async getComplexWords(text: string){
-    this.complexWords = await this.mainService.api.getComplexWords(text)
+  async getComplexWords(text: string,flag:string){
+    this.complexWords = await this.mainService.api.getComplexWords(text,flag)
     for(let word of this.complexWords){
       let synonym = await this.mainService.api.getSynonyms(word[4], word)
       //Identificar la palabra compleja y añadir su mejor sinonimo

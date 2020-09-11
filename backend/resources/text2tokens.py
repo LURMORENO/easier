@@ -18,7 +18,7 @@ class text2tokens:
         listapalabras=list()
         oracion=self.nlp(sentence)
         for j,token in enumerate(oracion):
-            if (token.pos_=='ADJ' or token.pos_=='ADV' or token.pos_=='NOUN' or token.pos_=='VERB'):
+            if (token.pos_=='NOUN' or token.pos_=='VERB'):
                 listapalabras.append((["P" + str(j), (oracion.text), token.idx, token.idx+len(token.orth_), token.orth_, 10, 10, 0, 1,1,0.05]))
         
         return listapalabras

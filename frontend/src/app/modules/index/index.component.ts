@@ -15,13 +15,21 @@ export class IndexComponent implements OnInit {
 
   constructor(private router: Router) { }
 
-
+  val:string
   ngOnInit(): void {
   }
 
   onSubmit() {
+    //console.log(this.val)
     let text = this.easierForm.get("text").value
-    this.router.navigate(['result'], { state : { text: text } })
+    this.router.navigate(['result'], { state : { text: text , flag:this.val} })
+  }
+
+  easierclick(){
+    this.val='1'
+  }
+  beaclick(){
+    this.val='0'
   }
 
 }

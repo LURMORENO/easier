@@ -9,19 +9,22 @@ import { catchError, retry } from 'rxjs/operators';
 export class ApiService {
 
   url = "http://163.117.129.208:5000/api"
-  // url = 'http://127.0.0.1:5000/api'
+  //url = "http://127.0.0.1:5000/api"
 
   constructor(private http: HttpClient) { }
 
-  getComplexWords(text: string): Promise<any>{
+  getComplexWords(text: string,flag:string): Promise<any>{
+    console.log(flag)
     return new Promise<any> ((resolve, reject) => {
       try {
         this.http.get(this.url+'/complex-words', {
           params: {
-            text:text
+            text:text,
+            flag:flag
           }
         }).subscribe((data) => {
-          resolve(data['result'])
+          resolve(data['result']);
+          console.log(data['result'])
         })
       } catch (error) {
         reject(error)
