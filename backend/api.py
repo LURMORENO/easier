@@ -73,9 +73,10 @@ def get_complex_words():
                         complex_words.append(sentencetags[i])
                     elif predictedtags[j][i] == 0:
                         print("simple"+" "+sentencetags[i][4])
-                        if config.clasificadorobj.Pyphenobj.getNSyl(sentencetags[i][4]) >4:
+                        numsil= config.clasificadorobj.Pyphenobj.getNSyl(sentencetags[i][4])
+                        if  numsil >4:
                             complex_words.append(sentencetags[i])
-                            print(config.clasificadorobj.Pyphenobj.getNSyl(sentencetags[i][4]))
+                            print(numsil)
         elif flag=='0':    
             for j in range(0, len(words)):
                 sentencetags = words[j]
