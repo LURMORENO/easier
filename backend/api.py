@@ -64,8 +64,8 @@ def get_complex_words():
             elif flag=='0':
                 predictedtags = [config.clasificadorobj.SVMPredict2(rowdeploy) for rowdeploy in matrix_deploy]
                 print("entro en segundo")
-
-        for j in range(0, len(words)):
+        if flag=='1':
+            for j in range(0, len(words)):
                 sentencetags = words[j]
                 for i in range(0, len(sentencetags)):
                     if predictedtags[j][i] == 1:
@@ -76,6 +76,21 @@ def get_complex_words():
                         if config.clasificadorobj.Pyphenobj.getNSyl(sentencetags[i][4]) >4:
                             complex_words.append(sentencetags[i])
                             print(config.clasificadorobj.Pyphenobj.getNSyl(sentencetags[i][4]))
+        elif flag=='0':    
+            for j in range(0, len(words)):
+                sentencetags = words[j]
+                for i in range(0, len(sentencetags)):
+                    if predictedtags[j][i] == 1:
+                        if config.clasificadorobj.getfreqRAE(sentencetags[i][4])==None:
+                            complex_words.append(sentencetags[i])
+                            print("none compleja"+" "+sentencetags[i][4])
+                        elif int(config.clasificadorobj.getfreqRAE(sentencetags[i][4]))>1500:
+                            print("compleja pero mayor a 1500 en diccionario rae"+" "+sentencetags[i][4])
+                            complex_words.append(sentencetags[i])
+                        else:
+                            print("compleja pero menor a 1500 en diccionario rae"+" "+sentencetags[i][4])    
+                        
+                        
 
         return jsonify(result=complex_words)
 

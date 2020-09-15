@@ -35,6 +35,7 @@ class clasificador:
         self.data = []
         self.model = self.SVMLoad()
         self.model2 = self.SVMLoad2()
+        self.diccionariorae=self.loadfrecuenciarae('../backend/resources/frecuenciasrae.csv')
 
     def loadDic(self, path):
         dic = {}
@@ -71,6 +72,19 @@ class clasificador:
             lista.append(line)
         f.close()
         return lista
+
+    def loadfrecuenciarae(self,path):
+        dicrae={}
+        tsvin = open(path, "rt",encoding='utf-8')
+        tsvin = csv.reader(tsvin, delimiter=';')
+        for row in tsvin:
+            numero=row[0]
+            dicrae[row[1].strip()]=numero[:-1].strip()
+        return dicrae
+    
+    def getfreqRAE(self,word):
+        freq=self.diccionariorae.get(word)
+        return freq
 
     def getProbability(self, ngram, dic, size):
         ngram = ngram.lower()
