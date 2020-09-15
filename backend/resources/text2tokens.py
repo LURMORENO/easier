@@ -19,7 +19,16 @@ class text2tokens:
         oracion=self.nlp(sentence)
         for j,token in enumerate(oracion):
             if (token.pos_=='NOUN' or token.pos_=='VERB'):
-                listapalabras.append((["P" + str(j), (oracion.text), token.idx, token.idx+len(token.orth_), token.orth_, 10, 10, 0, 1,1,0.05]))
+                listapalabras.append((["P" + str(j), oracion.text, token.idx, token.idx+len(token.orth_), token.orth_, 10, 10, 0, 1,1,0.05]))
+        
+        return listapalabras
+
+    def sentence2tokenseasier(self,sentence):
+        listapalabras=list()
+        oracion=self.nlp(sentence)
+        for j,token in enumerate(oracion):
+            if (token.pos_=='NOUN' or token.pos_=='VERB'or token.pos_=='ADJ'):
+                listapalabras.append((["P" + str(j), oracion.text, token.idx, token.idx+len(token.orth_), token.orth_, 10, 10, 0, 1,1,0.05]))
         
         return listapalabras
 

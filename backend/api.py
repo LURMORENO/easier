@@ -45,7 +45,10 @@ def get_complex_words():
         complex_words = list()
         
         sentencelist =  text2tokens.text2sentences(text)
-        words = [text2tokens.sentence2tokens(sentence) for sentence in sentencelist]
+        if flag=='1':
+            words = [text2tokens.sentence2tokenseasier(sentence) for sentence in sentencelist]
+        elif flag=='0':
+            words = [text2tokens.sentence2tokens(sentence) for sentence in sentencelist]
         predictedtags = list()
 
         if words and words[0]:
@@ -70,6 +73,9 @@ def get_complex_words():
                         complex_words.append(sentencetags[i])
                     elif predictedtags[j][i] == 0:
                         print("simple"+" "+sentencetags[i][4])
+                        if config.clasificadorobj.Pyphenobj.getNSyl(sentencetags[i][4]) >4:
+                            complex_words.append(sentencetags[i])
+                            print(config.clasificadorobj.Pyphenobj.getNSyl(sentencetags[i][4]))
 
         return jsonify(result=complex_words)
 
