@@ -24,10 +24,11 @@ export class IndexComponent implements OnInit {
     let text = this.easierForm.get("text").value
     this.router.navigate(['result'], { state : { text: text , flag:this.val} })
   }
-
+/*
   easierclick(){
     this.val='1'
   }
+  */
   beaclick(){
     this.val='0'
   }

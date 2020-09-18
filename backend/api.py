@@ -60,10 +60,10 @@ def get_complex_words():
                         config.totalUnis, config.uniE2R) for sentencetags in words]
             if flag=='1':
                 predictedtags = [config.clasificadorobj.SVMPredict(rowdeploy) for rowdeploy in matrix_deploy]
-                print("entro en primero")
+                print("entro en easier")
             elif flag=='0':
                 predictedtags = [config.clasificadorobj.SVMPredict2(rowdeploy) for rowdeploy in matrix_deploy]
-                print("entro en segundo")
+                print("entro en bea")
         if flag=='1':
             for j in range(0, len(words)):
                 sentencetags = words[j]
