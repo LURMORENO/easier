@@ -22,7 +22,7 @@ export class ResultComponent implements OnInit {
   constructor(private mainService: MainService, private sanitizer: DomSanitizer) {
     this.complexWords = new Array()
     this.word = new Word()
-   }
+  }
 
   ngOnInit() {
     this.text = history.state.text
