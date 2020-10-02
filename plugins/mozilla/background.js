@@ -48,8 +48,8 @@ browser.contextMenus.onClicked.addListener(function(info, tab) {
           }          
         }
       };
-      var url = "http://163.117.129.208:5000/api/complex-words?text="
-      xmlhttp.open("GET", url + info.selectionText, true)
+      var url = `http://163.117.129.208:5000/api/complex-words?text=${info.selectionText}&flag=0`
+      xmlhttp.open("GET", url, true)
       xmlhttp.setRequestHeader("Content-Type", "application/json")
       xmlhttp.send()      
   }

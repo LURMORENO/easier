@@ -1,4 +1,4 @@
-.tooltip {
+.tooltip-easier {
   position: relative;
   display: inline-block;
   font-weight: bold;
@@ -9,7 +9,7 @@
   text-decoration-style: solid;
 }
 
-.tooltip .tooltiptext {
+.tooltip-easier .tooltiptext {
   visibility: hidden;
   min-width: 120px;
   padding: 2px;
@@ -31,7 +31,7 @@
   border-color: #00008B #00008B #00008B #00008B;
 }
 
-.tooltip .tooltiptext::after {
+.tooltip-easier .tooltiptext::after {
   content: "";
   position: absolute;
   top: 100%;
@@ -42,7 +42,7 @@
   border-color:  #e6f2ff transparent transparent transparent;
 }
 
-.tooltip:hover .tooltiptext {
+.tooltip-easier:hover .tooltiptext {
   visibility: visible;
   opacity: 1;
 }

@@ -20,7 +20,7 @@ function replaceText (node, tuple) {
     if(node.parentElement.nodeName === 'P'){
       let content = node.parentElement.innerHTML;
       let regex = new RegExp(`\\b${tuple.word}\\b`, 'i');
-      content = content.replace(regex, `<div class=tooltip>${tuple.word} <span class=tooltiptext>${tuple.synonym}</span></div>`);
+      content = content.replace(regex, `<div class=tooltip-easier>${tuple.word} <span class=tooltiptext>${tuple.synonym}</span></div>`);
       node.parentElement.innerHTML = content;
     }
   }
