@@ -35,7 +35,6 @@ export class ResultComponent implements OnInit {
 
   async getComplexWords(text: string,flag:string){
     this.complexWords = await this.mainService.api.getComplexWords(text,flag)
-    debugger
     for(let word of this.complexWords){
       // Comprobar que la palabra compleja no se sustituye dos veces
       if(! this.complexWordsString.includes(word[4])){
