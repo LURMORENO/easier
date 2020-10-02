@@ -19,32 +19,39 @@ export class ResultComponent implements OnInit {
   loading: boolean = true
   showResultText: boolean = true
 
+  complexWordsString: Array<string>
+
   constructor(private mainService: MainService, private sanitizer: DomSanitizer) {
     this.complexWords = new Array()
     this.word = new Word()
+    this.complexWordsString = new Array()
   }
 
   ngOnInit() {
     this.text = history.state.text
     this.flag=history.state.flag
     this.getComplexWords(this.text,this.flag)
-
   }
 
   async getComplexWords(text: string,flag:string){
     this.complexWords = await this.mainService.api.getComplexWords(text,flag)
+    debugger
     for(let word of this.complexWords){
-      let synonym = await this.mainService.api.getSynonyms(word[4], word)
-      //Identificar la palabra compleja y añadir su mejor sinonimo
-      this.replaceComplexWords(word[4], synonym[0])
-      this.addListener()
+      // Comprobar que la palabra compleja no se sustituye dos veces
+      if(! this.complexWordsString.includes(word[4])){
+        this.complexWordsString.push(word[4])
+        let synonym = await this.mainService.api.getSynonyms(word[4], word)
+        //Identificar la palabra compleja y añadir su mejor sinonimo
+        this.replaceComplexWords(word[4], synonym[0])
+        this.addListener()
+      }
     }
   }
 
   replaceComplexWords(word: string, synonym?: string){
     let text = document.querySelector("#text");
     let regex = new RegExp(`\\b${word}\\b`, 'gi');
-    text.innerHTML = text.innerHTML.replace(regex, `<div class=word>${word} <span class=wordtext>${synonym}</span></div>`)
+    text.innerHTML = text.innerHTML.replace(regex, `<div class=word>${word}<span class=wordtext>${synonym}</span></div>`)
     // this.sanitizer.bypassSecurityTrustHtml(text)    
   }
 
@@ -52,7 +59,7 @@ export class ResultComponent implements OnInit {
     let words = document.querySelectorAll(".word");
     words.forEach(word => {
       word.addEventListener("click", () => {
-        this.toggleDictionary(word.textContent, event);
+        this.toggleDictionary(word.firstChild.textContent);
         if(this.isMobile()){
           this.showResultText = false
           console.log(this.showResultText)
@@ -61,7 +68,7 @@ export class ResultComponent implements OnInit {
     });
   }
 
-  async toggleDictionary(word: string, event) {
+  async toggleDictionary(word: string) {
     //Obtener definicion y sinonimo
     if(! this.selected){
       this.selected = true
@@ -69,7 +76,6 @@ export class ResultComponent implements OnInit {
     this.loading = true
     // Buscar la palabra compleja dentro de la lista
     // Modificar la palabra, sinonimos, definicion y pictograma que se muestra
-    word = word.split(' ')[0]
     let complex_word = this.complexWords.find((element => element[4] == word))
     let result = await this.mainService.api.getDefinition(word, complex_word[1])
     this.word.synonyms = await this.mainService.api.getSynonyms(word, complex_word)
