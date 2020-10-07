@@ -44,6 +44,10 @@ class Config(object):
         # Lematizador
         self.lematizador = lemma()
 
+        #PPDB
+        path = '../backend/resources/dicuniwords.csv'
+        self.diccionarioparafrases=self.clasificadorobj.loadDicuniparafrases2(path)
+
 
 class Text(object):
 

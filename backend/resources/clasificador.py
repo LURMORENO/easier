@@ -19,9 +19,11 @@ from sklearn.metrics import precision_recall_fscore_support as pr
 from sklearn.metrics import accuracy_score as ac
 from sklearn.metrics import f1_score
 from nltk.tag.stanford import StanfordPOSTagger
+from nltk.corpus import stopwords
 spanish_postagger = StanfordPOSTagger('../backend/resources/spanish.tagger',
                                       '../backend/resources/stanford-postagger-3.8.0.jar',
                                       encoding='utf-8')
+
 
 class clasificador:
     def __init__(self):
@@ -72,6 +74,22 @@ class clasificador:
             lista.append(line)
         f.close()
         return lista
+
+    def loadDicuniparafrases2(self,path):
+        dic = {}
+        f = open(path, 'r')
+        for line in f:
+            line = line.strip()
+            pos = line.rfind('\t')
+            key = line[0:pos - 1]
+            value = line[pos + 1:]
+            key=key.strip()
+            value=value.strip()
+            # print(key,freq)
+            if key in dic: dic[key].append(value.lower())
+            else:  dic[key] = [value.lower()]
+        f.close()
+        return dic
 
     def loadfrecuenciarae(self,path):
         dicrae={}
@@ -152,6 +170,64 @@ class clasificador:
             w_1 = tokens[index - 1]
         if (index + 1 <= len(tokens) - 1):
             w1 = tokens[index + 1]
+        if (index + 2 <= len(tokens) - 1):
+            w2 = tokens[index + 2]
+
+        return w_2, w_1, w1, w2
+
+    def getWindowlexical(self,word, sentence, start):
+
+        # para obtener los tokens, dividimos por ' '
+        tokens = nltk.word_tokenize(sentence)
+        #tokens=sentence.split()
+        #toktok = ToktokTokenizer()
+        #tokens=toktok.tokenize(sentence.decode('utf8'))
+
+        # transforamos a int
+        start = int(start)
+
+        # we return a 2-window around the word
+        w_2 = ''
+        w_1 = ''
+        w1 = ''
+        w2 = ''
+
+        # index of the word at tokens
+        index = -1
+
+        # count devuelve el numero de veces que ocurre la palabra en la lista
+        num = tokens.count(word)
+
+        if num == 1 or start == 0:
+            index = tokens.index(word)
+        else:
+            sentence1 = sentence[0:start - 1]
+            tokens1 = nltk.word_tokenize(sentence1)
+            #tokens1=sentence1.split(' ')
+            # try:
+            #     tokens1=toktok.tokenize(sentence1)
+            # except:
+            #     print sentence1
+            #     raise
+            index = len(tokens1)
+            if (index > -1 and tokens[index] != word):
+                index = -1
+            # print('Problems with',sentence,word)
+
+        if (index - 2 >= 0):
+            w_2 = tokens[index - 2]
+        if (index - 1 >= 0):
+            w_1 = tokens[index - 1]
+            cont=0
+            while(w_1 in stopwords.words('spanish')):
+                cont+=1
+                w_1 = tokens[index - cont]
+        if (index + 1 <= len(tokens) - 1):
+            w1 = tokens[index + 1]
+            cont=0
+            while(w1 in stopwords.words('spanish')):
+                cont+=1
+                w1 = tokens[index + cont]
         if (index + 2 <= len(tokens) - 1):
             w2 = tokens[index + 2]
 

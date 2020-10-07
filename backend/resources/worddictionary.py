@@ -21,5 +21,5 @@ class worddictionary:
                     synonymslist.append(syn)
             return synonymslist
         except:
-            sameword.append(word.encode('utf8'))
+            sameword.append(word)
             return sameword

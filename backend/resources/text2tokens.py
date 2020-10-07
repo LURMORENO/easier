@@ -1,6 +1,8 @@
 import os
 import spacy
 from resources.clasificador import clasificador
+from nltk.stem.snowball import SnowballStemmer
+stemmer = SnowballStemmer(language='spanish')
 clasificadorobj=clasificador()
 
 class text2tokens:
@@ -36,3 +38,13 @@ class text2tokens:
         palabra = self.nlp(word)
 
         return palabra[0].lemma_
+
+    def eliminarstem(self,dic,word):
+        dic2={}
+        for element in dic:
+            if stemmer.stem(word) not in element and element!='':
+                dic2[element]=None
+                
+        if len(dic2)==0:
+            dic2[word]=None
+        return dic2
