@@ -365,6 +365,14 @@
     text-shadow:0px 1px 0px #283966;
   }
   */
+  .back button {
+    box-shadow: 0px 0px 0px 2px #ebf1f7;
+    background:linear-gradient(to bottom, #ebf1f7 5%, #ebf1f7 100%);
+    background-color:#ebf1f7;
+    border:1px solid #ebf1f7;
+    color:#ebf1f7;
+    text-shadow:0px 1px 0px #ebf1f7;
+  }
 
   .back button a {
     font-size: large;
