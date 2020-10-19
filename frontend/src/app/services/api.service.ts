@@ -8,8 +8,8 @@ import { catchError, retry } from 'rxjs/operators';
 })
 export class ApiService {
 
-  url = "http://163.117.129.208:5000/api"
-  //url = "http://127.0.0.1:5000/api"
+  //url = "http://163.117.129.208:5000/api"
+  url = "http://127.0.0.1:5000/api"
 
   constructor(private http: HttpClient) { }
 

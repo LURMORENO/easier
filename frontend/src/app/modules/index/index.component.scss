@@ -154,22 +154,14 @@
   }
   
   .text-form button {
-    display: block;
-    margin: 20px auto 0;
-    padding: 15px 30px;
-    background: var(--dark-blue);
-    border-radius: 50px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: none;
   }
 
   .text-form button:focus {
     outline: black solid 2px;
   }
   
-  .text-form button img {
-    width: 150px;
-  }
-  
+
   /* RESULT TEXT */
   .result_text {
     margin-top: 15px;
