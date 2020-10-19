@@ -164,7 +164,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     border-radius: 8px;
     outline: 0;
   }
-  
+  /* 
   .text-form button {
     display: block;
     margin: 20px auto 0;
@@ -183,7 +183,27 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     text-decoration:none;
     text-shadow:0px 1px 0px #283966;
   }
-  
+  */
+  .text-form button {
+    display: block;
+    margin: 20px auto 0;
+    padding: 15px 30px;
+    outline: 0;
+    width: 16%;
+    height: 65px;
+    box-shadow: 0px 0px 0px 2px #9fb4f2;
+    background:linear-gradient(to bottom, #7892c2 5%, #476e9e 100%);
+    background-color:#7892c2;
+    border:1px solid #4e6096;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:19px;
+    padding:12px 37px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #283966;
+  }
+
+
   /* RESULT TEXT */
   .result_text {
     margin-top: 15px;

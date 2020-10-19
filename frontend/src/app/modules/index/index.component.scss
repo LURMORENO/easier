@@ -152,7 +152,7 @@
     outline: 0;
     font-size: large;
   }
-  
+  /*
   .text-form button {
     box-shadow: none;
   }
@@ -160,7 +160,27 @@
   .text-form button:focus {
     outline: black solid 2px;
   }
+  */
+  .text-form button {
+    display: block;
+    margin: 20px auto 0;
+    padding: 15px 30px;
+    background: white;
+    border-radius: 50px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: none;
+    border:1px solid #fff;
+  }
+
+  .text-form button:focus {
+    outline: black solid 2px;
+  }
   
+  .text-form button img {
+    width: 150px;
+  }
+
+
 
   /* RESULT TEXT */
   .result_text {
