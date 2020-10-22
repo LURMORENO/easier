@@ -7,12 +7,12 @@ From a text in Spanish entered by the user, complex or unusual words are detecte
 Following a user-centred approach, the project proposal is designed and evaluated considering the collaboration of organizations and associations of people with intellectual disabilities such as Plena Inclusión Madrid and Grupo AMÁS.
 This work was supported by the Accessible Technologies award - INDRA Technologies and the Fundación Universia (www.tecnologiasaccesibles.com  ), and the Research Program of the Ministry of Economy and Competitiveness - Government of Spain, (DeepEMR project TIN2017-87548-C2-1-R). We would also like to express our sincerest gratitude to the association of people with cognitive disabilities "Plena Inclusión Madrid" (plenainclusionmadrid.org ).
 
-# AUTHORSHIP AND INTELLECTUAL PROPERTY: 
+## AUTHORSHIP AND INTELLECTUAL PROPERTY: 
 •	Principal investigator: Lourdes Moreno (Lmoreno@inf.uc3m.es )
 •	Research team:	Rodrigo Alarcon, Paloma Martínez and Isabel Segura-Bedmar
 Human Language and Accessibility Technologies (HULAT) Group (http://hulat.inf.uc3m.es/ ).
 Computer Science Department, Universidad Carlos III de Madrid, Madrid, Spain 
 
 
-# REFERENCE: 
+## REFERENCE: 
 L. MORENO, R. ALARCON, and P. MARTÍNEZ. 2020. EASIER system. Language resources for cognitive accessibility. In The 22nd International ACM SIGACCESS Conference on Computers and Accessibility (ASSETS ’20), October 26–28, 2020, Virtual Event, Greece. ACM, New York, NY, USA, 
