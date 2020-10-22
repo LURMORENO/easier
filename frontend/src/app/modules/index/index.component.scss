@@ -163,6 +163,7 @@
   */
   .text-form button {
     display: block;
+    cursor: pointer;
     margin: 20px auto 0;
     padding: 15px 30px;
     background: white;
@@ -171,13 +172,18 @@
     box-shadow: none;
     border:1px solid #fff;
   }
-
+/*
   .text-form button:focus {
-    outline: black solid 2px;
+    outline: black solid 15px;
   }
+  */
   
   .text-form button img {
     width: 150px;
+  }
+
+  .text-form button:focus img {
+    outline: black solid 2px;
   }
 
 
