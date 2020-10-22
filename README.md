@@ -21,3 +21,16 @@ Computer Science Department, Universidad Carlos III de Madrid, Madrid, Spain
 
 #### REFERENCE: 
 L. MORENO, R. ALARCON, and P. MARTÍNEZ. 2020. EASIER system. Language resources for cognitive accessibility. In The 22nd International ACM SIGACCESS Conference on Computers and Accessibility (ASSETS ’20), October 26–28, 2020, Virtual Event, Greece. ACM, New York, NY, USA, 
+
+## Complex Word Identification resources
+Yimam, S. M., Stajner, S., Riedl, M., & Biemann, C. (2017). Multilingual and Cross-Lingual Complex Word Identification. Recent Advances in Natural Language Processing, 813–822. https://doi.org/10.26615/978-954-452-049-6-104
+Cardellino, C. (2016). Spanish {B}illion {W}ords {C}orpus and {E}mbeddings. Retrieved from https://crscardellino.github.io/SBWCE/
+
+## Substitute Generation/Selection resources
+Navigli, R., & Ponzetto, S. (2010). BabelNet: Building a very large multilingual semantic network. Proceedings of the 48th Annual Meeting of the Association for Computational Linguistics, (July), 216–225. Retrieved from http://dl.acm.org/citation.cfm?id=1858704
+Pavlick, E., & Callison-Burch, C. (2016). Simple PPDB : A Paraphrase Database for Simplification. (In Proceedings of the 54th ACL), 143–148
+
+## Word sense disambiguation resources
+J. Devlin, M. Chang, K. Lee, and K. Toutanova, “BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding,” 2019.
+Natural Language Processing for PyTorch and TensorFlow 2.0 https://github.com/huggingface/transformers
+
