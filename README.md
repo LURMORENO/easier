@@ -25,10 +25,12 @@ L. MORENO, R. ALARCON, and P. MARTÍNEZ. 2020. EASIER system. Language resources
 #### Complex Word Identification resources
 - Yimam, S. M., Stajner, S., Riedl, M., & Biemann, C. (2017). Multilingual and Cross-Lingual Complex Word Identification. Recent Advances in Natural Language Processing, 813–822. https://doi.org/10.26615/978-954-452-049-6-104
 - Cardellino, C. (2016). Spanish {B}illion {W}ords {C}orpus and {E}mbeddings. Retrieved from https://crscardellino.github.io/SBWCE/
+- Diccionario de Frecuencias. CORPUS CREA https://www.rae.es/recursos/banco-de-datos/crea
 
 #### Substitute Generation/Selection resources
 - Navigli, R., & Ponzetto, S. (2010). BabelNet: Building a very large multilingual semantic network. Proceedings of the 48th Annual Meeting of the Association for Computational Linguistics, (July), 216–225. Retrieved from http://dl.acm.org/citation.cfm?id=1858704
 - Pavlick, E., & Callison-Burch, C. (2016). Simple PPDB : A Paraphrase Database for Simplification. (In Proceedings of the 54th ACL), 143–148
+- Cardellino, C. (2016). Spanish {B}illion {W}ords {C}orpus and {E}mbeddings. Retrieved from https://crscardellino.github.io/SBWCE/
 
 #### Word sense disambiguation resources
 - J. Devlin, M. Chang, K. Lee, and K. Toutanova, “BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding,” 2019.
