@@ -14,5 +14,5 @@ Human Language and Accessibility Technologies (HULAT) Group (http://hulat.inf.uc
 Computer Science Department, Universidad Carlos III de Madrid, Madrid, Spain 
 
 
-###### REFERENCE: 
+#### REFERENCE: 
 L. MORENO, R. ALARCON, and P. MARTÍNEZ. 2020. EASIER system. Language resources for cognitive accessibility. In The 22nd International ACM SIGACCESS Conference on Computers and Accessibility (ASSETS ’20), October 26–28, 2020, Virtual Event, Greece. ACM, New York, NY, USA, 
