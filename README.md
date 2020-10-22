@@ -8,7 +8,7 @@ With this goal, a web system is offered (http://163.117.129.208:8080/ ) that inc
 From a text in Spanish entered by the user, complex or unusual words are detected in the text. Synonyms, easy-to-read definition and pictogram are provided for each unusual word. These language services are obtained using Natural Language Processing methods with automatic learning approaches providing a systematic process.
 Following a user-centred approach, the project proposal is designed and evaluated considering the collaboration of organizations and associations of people with intellectual disabilities such as Plena Inclusión Madrid and Grupo AMÁS.
 
-This work was supported by the Accessible Technologies award - INDRA Technologies and the Fundación Universia (www.tecnologiasaccesibles.com  ), and the Research Program of the Ministry of Economy and Competitiveness - Government of Spain, (DeepEMR project TIN2017-87548-C2-1-R). We would also like to express our sincerest gratitude to the association of people with cognitive disabilities "Plena Inclusión Madrid" (plenainclusionmadrid.org ).
+This work was supported by the Accessible Technologies award - INDRA Technologies and the Fundación Universia (www.tecnologiasaccesibles.com  ), and the Research Program of the Ministry of Economy and Competitiveness - Government of Spain, (DeepEMR project TIN2017-87548-C2-1-R).
 
 ## AUTHORSHIP: 
 - Principal investigator: Lourdes Moreno (Lmoreno@inf.uc3m.es )
