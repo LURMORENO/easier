@@ -1,6 +1,6 @@
 # EASIER PROJECT
 
-The EASIER project is being developed by the Human Language and Accessibility Technologies (HULAT) research group (http://hulat.inf.uc3m.es/ )of the Computer Science department of the Carlos III University of Madrid (UC3M). 
+The EASIER project is being developed by the Human Language and Accessibility Technologies (HULAT) research group (http://hulat.inf.uc3m.es/ )of the Computer Science department of the Universidad Carlos III de Madrid (UC3M). 
 The objective of the project is to develop technological solutions that improve accessibility in access to web content for people with intellectual disabilities, the elderly, and all people in general. It offers a web system with an accessible interface that provides systematic lexical simplification of Spanish texts. 
 
 With this goal, a web system is offered (http://163.117.129.208:8080/ ) that increases cognitive accessibility and provides various language tools. The web system is designed optimizing cognitive accessibility features following easy-to-read, plain language guidelines, as well as WCAG 2.1 (Level AA). This web system can be accessed from the desktop computer or from the mobile. In addition, a browser extension is offered (Chrome and Firefox).
