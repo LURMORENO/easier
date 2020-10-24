@@ -14,7 +14,6 @@ export class ApiService {
   constructor(private http: HttpClient) { }
 
   getComplexWords(text: string,flag:string): Promise<any>{
-    console.log(flag)
     return new Promise<any> ((resolve, reject) => {
       try {
         this.http.get(this.url+'/complex-words', {
@@ -24,7 +23,6 @@ export class ApiService {
           }
         }).subscribe((data) => {
           resolve(data['result']);
-          console.log(data['result'])
         })
       } catch (error) {
         reject(error)
@@ -131,18 +129,37 @@ export class ApiService {
   getPictogram(word: string):Promise<string>{
     return new Promise<string>((resolve, reject) => {
       try {
-        this.http.get(this.url+'/pictogram', {
-          params: {
-            word: word
-          }
-        }).subscribe((result => {
-          resolve(result['result'])
+        this.http.get(`https://api.arasaac.org/api/pictograms/es/bestsearch/${word}`)
+        .subscribe((result => {
+          let word_id = result[0]['_id']
+          let url = `https://api.arasaac.org/api/pictograms/${word_id}?download=false`
+          resolve(url)
+          
+        }),
+        (error => {
+          resolve('')
         }))
       } catch (error) {
         reject(error)
       }
     })
   }
+
+  // getPictogram(word: string):Promise<string>{
+  //   return new Promise<string>((resolve, reject) => {
+  //     try {
+  //       this.http.get(this.url+'/pictogram', {
+  //         params: {
+  //           word: word
+  //         }
+  //       }).subscribe((result => {
+  //         resolve(result['result'])
+  //       }))
+  //     } catch (error) {
+  //       reject(error)
+  //     }
+  //   })
+  // }
 
   getLemma(word: string):Promise<string>{
     return new Promise<string>((resolve, reject) => {

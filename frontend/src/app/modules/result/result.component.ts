@@ -29,7 +29,7 @@ export class ResultComponent implements OnInit {
 
   ngOnInit() {
     this.text = history.state.text
-    this.flag=history.state.flag
+    this.flag = history.state.flag
     this.getComplexWords(this.text,this.flag)
   }
 
@@ -61,7 +61,6 @@ export class ResultComponent implements OnInit {
         this.toggleDictionary(word.firstChild.textContent);
         if(this.isMobile()){
           this.showResultText = false
-          console.log(this.showResultText)
         }
       });
     });
