@@ -11,9 +11,10 @@ Following a user-centred approach, the project proposal is designed and evaluate
 
 This work was supported by the Accessible Technologies award - INDRA Technologies and the Fundación Universia (www.tecnologiasaccesibles.com  ), and the Research Program of the Ministry of Economy and Competitiveness - Government of Spain, (DeepEMR project TIN2017-87548-C2-1-R).
 
-## AUTHORSHIP: 
+## Research team: 
 - Principal investigator: Lourdes Moreno (Lmoreno@inf.uc3m.es )
-- Research team:	Rodrigo Alarcon, Paloma Martínez and Isabel Segura-Bedmar
+- Research team:	Rodrigo Alarcon, Paloma Martínez, Isabel Segura-Bedmar
+- Research Technical Support staff: Jesús Galán Llano, Elena Gonzalez Sabin
 
 Human Language and Accessibility Technologies (HULAT) Group (http://hulat.inf.uc3m.es/ ).
 Computer Science Department, Universidad Carlos III de Madrid, Madrid, Spain 
