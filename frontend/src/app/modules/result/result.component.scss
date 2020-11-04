@@ -148,9 +148,10 @@
   /* RESULT TEXT */
   .result_text {
     margin-top: 15px;
-    padding: 0 20px;
+    padding: 5 20px;
     white-space: pre-wrap;
     font-size: large;
+    line-height: 1,5em; 
   }
 
   .tutorial {
@@ -164,7 +165,7 @@
     cursor: pointer;
     text-decoration: 1px underline;
     text-decoration-style: wavy;
-    /* border-bottom: 2px solid currentColor; */
+       /* border-bottom: 2px solid currentColor; */
   }
   
   .result_text h2 {
