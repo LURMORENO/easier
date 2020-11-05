@@ -129,7 +129,7 @@ export class ApiService {
   getPictogram(word: string):Promise<string>{
     return new Promise<string>((resolve, reject) => {
       try {
-        this.http.get(`https://api.arasaac.org/api/pictograms/es/bestsearch/${word}`)
+        this.http.get(`https://api.arasaac.org/api/pictograms/es/search/${word}`)
         .subscribe((result => {
           let word_id = result[0]['_id']
           let url = `https://api.arasaac.org/api/pictograms/${word_id}?download=false`
