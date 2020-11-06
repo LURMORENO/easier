@@ -21,7 +21,7 @@ Computer Science Department, Universidad Carlos III de Madrid, Madrid, Spain
 
 
 #### REFERENCE: 
-L. MORENO, R. ALARCON, and P. MARTÍNEZ. 2020. EASIER system. Language resources for cognitive accessibility. In The 22nd International ACM SIGACCESS Conference on Computers and Accessibility (ASSETS ’20), October 26–28, 2020, Virtual Event, Greece. ACM, New York, NY, USA, 
+Lourdes Moreno, Rodrigo Alarcon, and Paloma Martínez. 2020. EASIER system. Language resources for cognitive accessibility. In The 22nd International ACM SIGACCESS Conference on Computers and Accessibility (ASSETS ’20), October 26–28, 2020, Virtual Event, Greece. ACM, New York, NY, USA, 
 
 #### Complex Word Identification resources
 - Yimam, S. M., Stajner, S., Riedl, M., & Biemann, C. (2017). Multilingual and Cross-Lingual Complex Word Identification. Recent Advances in Natural Language Processing, 813–822. https://doi.org/10.26615/978-954-452-049-6-104
