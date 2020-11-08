@@ -162,6 +162,16 @@ export class ApiService {
          if(word=='vulnerables'){
           let url= `https://api.arasaac.org/api/pictograms/4620?download=false`
          resolve(url)}
+         else{
+          this.http.get(`https://api.arasaac.org/api/pictograms/es/search/${word}`)
+          .subscribe((result => {
+            let word_id = result[0]['_id']
+            let url = `https://api.arasaac.org/api/pictograms/${word_id}?download=false`
+            resolve(url)}),
+
+          (error => {
+            resolve('')}))
+         }
         /*
         this.http.get(`https://api.arasaac.org/api/pictograms/es/search/${word}`)
         .subscribe((result => {

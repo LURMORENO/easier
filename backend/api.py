@@ -332,39 +332,37 @@ def get_synonyms_v2():
         dicsim={}
         if word == "plataforma":
             dicsim["organización"]=None
-            
             return jsonify(result=list(dicsim))
-        elif word== "pandemia":
+        if word== "pandemia":
             dicsim["epidemia"]=None
-            
             return jsonify(result=list(dicsim))
-        elif word== "mascarillas":
+        if word== "mascarillas":
             dicsim["mascarillas"]=None
             return jsonify(result=list(dicsim))
-        elif word== "insta":
+        if word== "insta":
             dicsim["pide"]=None
             dicsim["solicita"]=None
             return jsonify(result=list(dicsim))
-        elif word== "facilitar":
+        if word== "facilitar":
             dicsim["ayudar"]=None
             return jsonify(result=list(dicsim))
-        elif word== "incorporación":
+        if word== "incorporación":
             dicsim["introducción"]=None
             dicsim["inscripción"]=None 
             return jsonify(result=list(dicsim))
-        elif word== "garantiza":
+        if word== "garantiza":
             dicsim["asegurar"]=None
             return jsonify(result=list(dicsim))
-        elif word== "garantice":
+        if word== "garantice":
             dicsim["asegurar"]=None
             return jsonify(result=list(dicsim))
-        elif word== "contraer":
+        if word== "contraer":
             dicsim["adquirir"]=None
             return jsonify(result=list(dicsim))
-        elif word== "crónicos":
+        if word== "crónicos":
             dicsim["grave"]=None
             return jsonify(result=list(dicsim))
-        elif word== "vulnerables":
+        if word== "vulnerables":
             dicsim["débil"]=None
             return jsonify(result=list(dicsim))
         else:
