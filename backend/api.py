@@ -423,10 +423,8 @@ def get_synonyms_v2():
                 if word != candidate.lower() and candidate.lower()!='':
                     dicsim[candidate]=dis3
                     dicsim2={k: v for k, v in sorted(dicsim.items(), key=lambda item: item[1])}
+                    dicsim2=text2tokens.removestemrae(dicsim2)
                     #print(dis2)
-                    wordreplace = candidatesentencetags[4]
-                    if wordreplace:
-                        synonims_final.append(wordreplace)
 
             # Si se ha encontrado al menos un sinonimo se devuelven los 3 mas significativos            
             if len(dicsim2) > 0:
