@@ -61,7 +61,7 @@ class text2tokens:
     def removestemrae(self,dicp):
         newdic={}
         for item in dicp:
-            if removestemraeword(stemmer.stem(item))==True:
+            if self.removestemraeword(stemmer.stem(item))==True:
                 newdic[item]=None
         return newdic
 
