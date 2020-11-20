@@ -57,3 +57,15 @@ class text2tokens:
         if len(dic2)==0:
             dic2[word]=None
         return dic2
+
+    def removestemrae(self,dicp):
+        newdic={}
+        for item in dicp:
+            if self.removestemraeword(stemmer.stem(item))==True:
+                newdic[item]=None
+        return newdic
+
+    def removestemraeword(self,word):
+        for element in clasificadorobj.diccionariorae:
+            if word in element:
+                return True
