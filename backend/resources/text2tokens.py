@@ -69,3 +69,12 @@ class text2tokens:
         for element in clasificadorobj.diccionariorae:
             if word in element:
                 return True
+
+    def cleanspecificdic(self,dicp):
+        newdic={}
+        for item in dicp:
+            if item!='incapacidad' or item!='incapacidades' or item!='impedidos':
+                newdic[item]=None
+        return newdic
+                
+        

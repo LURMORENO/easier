@@ -86,11 +86,13 @@ def get_complex_words():
                         complex_words.append(sentencetags[i])
                     if predictedtags[j][i] == 1:
                         if config.clasificadorobj.getfreqRAE(sentencetags[i][4])==None:
-                            complex_words.append(sentencetags[i])
                             print("none compleja"+" "+sentencetags[i][4])
+                            complex_words.append(sentencetags[i])
+                            print(len(sentencetags[i]))
                         elif int(config.clasificadorobj.getfreqRAE(sentencetags[i][4]))>1500:
                             print("compleja pero mayor a 1500 en diccionario rae"+" "+sentencetags[i][4])
                             complex_words.append(sentencetags[i])
+                            print(len(sentencetags[i]))
                         else:
                             print("compleja pero menor a 1500 en diccionario rae"+" "+sentencetags[i][4])    
                         
@@ -423,12 +425,21 @@ def get_synonyms_v2():
                 if word != candidate.lower() and candidate.lower()!='':
                     dicsim[candidate]=dis3
                     dicsim2={k: v for k, v in sorted(dicsim.items(), key=lambda item: item[1])}
+                    dicsim2=text2tokens.cleanspecificdic(dicsim2)
+
                     dicsim2=text2tokens.removestemrae(dicsim2)
+
                     #print(dis2)
 
             # Si se ha encontrado al menos un sinonimo se devuelven los 3 mas significativos            
             if len(dicsim2) > 0:
-                return jsonify(result=list(dicsim2)[-3:])
+                synonims_final=list(dicsim2)[-3:]
+                if config.clasificadorobj.getfreqRAE(synonims_final[0])==None:
+                    synonims_final.insert(0,False)
+                    return jsonify(result=synonims_final)
+                else:
+                    synonims_final.insert(0,True)
+                    return jsonify(result=synonims_final)
             # Si no se ha encontrado ningun sinonimo se devuelve una lista con
             # la palabra original
             else:

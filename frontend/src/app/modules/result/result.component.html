@@ -35,8 +35,8 @@
 
           <div class="sinonimos">
             <ul class="result_dictionary__head__synonyms">
-              <li *ngFor="let synonym of word.synonyms;">
-                {{synonym}}
+              <li *ngFor="let synonym of word.synonyms | slice:1:4">
+                  {{synonym}}
               </li>
             </ul>
           </div>

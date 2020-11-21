@@ -79,6 +79,7 @@ export class ApiService {
     })
   }
 
+
   getDefinition(word: string, phrase: string): Promise<any>{
     return new Promise<any>(async (resolve, reject) => {
       try {
