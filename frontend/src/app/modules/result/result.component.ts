@@ -56,7 +56,7 @@ export class ResultComponent implements OnInit {
     }
     else{
       console.log("FALSE!")
-      text.innerHTML = text.innerHTML.replace(regex, `<div class=word>${word}</div>`)
+      text.innerHTML = text.innerHTML.replace(regex, `<div class=word>${word}<span class=wordtext>${word}</span></div>`)
     }
     
     // this.sanitizer.bypassSecurityTrustHtml(text)    
