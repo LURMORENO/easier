@@ -60,9 +60,9 @@ class text2tokens:
 
     def removestemrae(self,dicp):
         newdic={}
-        for item in dicp:
+        for item,value in dicp.items():
             if self.removestemraeword(stemmer.stem(item))==True:
-                newdic[item]=None
+                newdic[item]=value
         return newdic
 
     def removestemraeword(self,word):
@@ -72,9 +72,9 @@ class text2tokens:
 
     def cleanspecificdic(self,dicp):
         newdic={}
-        for item in dicp:
-            if item!='incapacidad' or item!='incapacidades' or item!='impedidos':
-                newdic[item]=None
+        for key,value in dicp.items():
+            if key.lower()!="incapacidad" or key.lower()!="incapacidades" or key.lower()!="impedidos":
+                newdic[key]=value        
         return newdic
                 
         

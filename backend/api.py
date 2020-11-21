@@ -422,12 +422,14 @@ def get_synonyms_v2():
                 #if dis2 < dis3 and word != candidate.lower() and candidatepredictedtag[0] != 1:
                 if word != candidate.lower() and candidate.lower()!='':
                     dicsim[candidate]=dis3
-                    dicsim2={k: v for k, v in sorted(dicsim.items(), key=lambda item: item[1])}
-                    if word == 'discapacidad':
-                        dicsim2=text2tokens.cleanspecificdic(dicsim2)
-                    dicsim2=text2tokens.removestemrae(dicsim2)
 
-                    #print(dis2)
+
+            if word.lower() == 'discapacidad':
+                dicsim2={k: v for k, v in sorted(dicsim.items(), key=lambda item: item[1])}
+                dicsim2=text2tokens.cleanspecificdic(dicsim2)
+            else:
+                dicsim=text2tokens.removestemrae(dicsim)
+                dicsim2={k: v for k, v in sorted(dicsim.items(), key=lambda item: item[1])}
 
             # Si se ha encontrado al menos un sinonimo se devuelven los 3 mas significativos            
             if len(dicsim2) > 0:
