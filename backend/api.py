@@ -88,11 +88,9 @@ def get_complex_words():
                         if config.clasificadorobj.getfreqRAE(sentencetags[i][4])==None:
                             print("none compleja"+" "+sentencetags[i][4])
                             complex_words.append(sentencetags[i])
-                            print(len(sentencetags[i]))
                         elif int(config.clasificadorobj.getfreqRAE(sentencetags[i][4]))>1500:
                             print("compleja pero mayor a 1500 en diccionario rae"+" "+sentencetags[i][4])
                             complex_words.append(sentencetags[i])
-                            print(len(sentencetags[i]))
                         else:
                             print("compleja pero menor a 1500 en diccionario rae"+" "+sentencetags[i][4])    
                         
@@ -425,8 +423,8 @@ def get_synonyms_v2():
                 if word != candidate.lower() and candidate.lower()!='':
                     dicsim[candidate]=dis3
                     dicsim2={k: v for k, v in sorted(dicsim.items(), key=lambda item: item[1])}
-                    dicsim2=text2tokens.cleanspecificdic(dicsim2)
-
+                    if word == 'discapacidad':
+                        dicsim2=text2tokens.cleanspecificdic(dicsim2)
                     dicsim2=text2tokens.removestemrae(dicsim2)
 
                     #print(dis2)
