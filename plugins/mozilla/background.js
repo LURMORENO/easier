@@ -33,13 +33,22 @@ browser.contextMenus.onClicked.addListener(function(info, tab) {
             var xml = new XMLHttpRequest();
             xml.onreadystatechange = function(){
               if(this.readyState == 4 && this.status == 200){
-                var synonym = JSON.parse(this.response)['result'][0]
-                browser.tabs.sendMessage(tabs[0].id, {
-                  command: "replace",
-                  tuple: { 
-                    word:sentencetags[4],
-                    synonym: synonym}
-                });
+                var synonym = JSON.parse(this.response)['result'][1]
+                if (sentencetags[4]=="discapacidad"){
+                        chrome.tabs.sendMessage(tabs[0].id, {
+                          command: "replace",
+                          tuple: { 
+                            word:sentencetags[4],
+                            synonym: "discapacidad"}
+                })}
+                else{
+                chrome.tabs.sendMessage(tabs[0].id, {
+                          command: "replace",
+                          tuple: { 
+                            word:sentencetags[4],
+                            synonym: synonym}
+					
+				        })};
               }
             }
             xml.open("GET", url + `word=${sentencetags[4]}&sentencetags=${JSON.stringify(sentencetags)}`)
