@@ -365,6 +365,13 @@ def get_synonyms_v2():
         if word== "vulnerables":
             dicsim["débil"]=None
             return jsonify(result=list(dicsim))
+        #if word== "discapacidad":
+        #    dicsim["débil"]=None
+        #    return jsonify(result=list(dicsim))
+        if word== "vacuna" or word== "vacunas":
+            dicsim["inyecciones"]=None
+            dicsim["inmunización"]=None
+            return jsonify(result=list(dicsim))
         else:
             dis2 = 0
             synonims_final = list()
@@ -424,11 +431,11 @@ def get_synonyms_v2():
                     dicsim[candidate]=dis3
 
 
-            if word.lower() == 'discapacidad':
+            if word.lower() == 'discapacidad' or word.lower() == 'alcance':
                 dicsim2={k: v for k, v in sorted(dicsim.items(), key=lambda item: item[1])}
                 dicsim2=text2tokens.cleanspecificdic(dicsim2)
             else:
-                dicsim=text2tokens.removestemrae(dicsim)
+                #dicsim=text2tokens.removestemrae(dicsim)
                 dicsim2={k: v for k, v in sorted(dicsim.items(), key=lambda item: item[1])}
 
             # Si se ha encontrado al menos un sinonimo se devuelven los 3 mas significativos            
