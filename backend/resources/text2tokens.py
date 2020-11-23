@@ -23,6 +23,8 @@ class text2tokens:
         for j,token in enumerate(oracion):
             if (token.pos_=='NOUN' or token.pos_=='VERB'):
                 listapalabras.append((["P" + str(j), oracion.text, token.idx, token.idx+len(token.orth_), token.orth_, 10, 10, 0, 1,1,0.05]))
+            if (token.orth_=='vulnerables' or token.orth_=='crónicos'):
+                listapalabras.append((["P" + str(j), oracion.text, token.idx, token.idx+len(token.orth_), token.orth_, 10, 10, 0, 1,1,0.05]))
         
         return listapalabras
 
@@ -55,3 +57,26 @@ class text2tokens:
         if len(dic2)==0:
             dic2[word]=None
         return dic2
+
+    def removestemrae(self,dicp):
+        newdic={}
+        for item,value in dicp.items():
+            if self.removestemraeword(stemmer.stem(item))==True:
+                newdic[item]=value
+        return newdic
+
+    def removestemraeword(self,word):
+        for element in clasificadorobj.diccionariorae:
+            if word in element:
+                return True
+
+    def cleanspecificdic(self,dicp):
+        newdic={}
+        #print("entró a función")
+        for key,value in dicp.items():
+            if key.lower()!="incapacidad" and key.lower()!="incapacidades" and key.lower()!="impedidos" and key.lower()!="manos" and key.lower()!="poder":
+                newdic[key]=value        
+        #print(newdic)
+        return newdic
+                
+        

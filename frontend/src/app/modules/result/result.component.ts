@@ -41,16 +41,24 @@ export class ResultComponent implements OnInit {
         this.complexWordsString.push(word[4])
         let synonym = await this.mainService.api.getSynonyms(word[4], word)
         //Identificar la palabra compleja y añadir su mejor sinonimo
-        this.replaceComplexWords(word[4], synonym[0])
+        this.replaceComplexWords(word[4], synonym[1],synonym[0])
         this.addListener()
       }
     }
   }
 
-  replaceComplexWords(word: string, synonym?: string){
+  replaceComplexWords(word: string, synonym?: string,synonym2?: boolean){
     let text = document.querySelector("#text");
     let regex = new RegExp(`\\b${word}\\b`, 'gi');
-    text.innerHTML = text.innerHTML.replace(regex, `<div class=word>${word}<span class=wordtext>${synonym}</span></div>`)
+    if (synonym2==true){
+      console.log("TRUE!")
+      text.innerHTML = text.innerHTML.replace(regex, `<div class=word>${word}<span class=wordtext>${synonym}</span></div>`)
+    }
+    else{
+      console.log("FALSE!")
+      text.innerHTML = text.innerHTML.replace(regex, `<div class=word>${word}<span class=wordtext>${word}</span></div>`)
+    }
+    
     // this.sanitizer.bypassSecurityTrustHtml(text)    
   }
 
