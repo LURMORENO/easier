@@ -354,49 +354,51 @@ def get_synonyms_v2():
             return jsonify(result=synonims_final)
         if word== "facilitar":
             dicsim["ayudar"]=None
-            synonims_final.insert(0,True)
             synonims_final=list(dicsim)
+            synonims_final.insert(0,True)
             return jsonify(result=synonims_final)
         if word== "incorporación":
             dicsim["introducción"]=None
             dicsim["inscripción"]=None 
-            synonims_final.insert(0,True)
             synonims_final=list(dicsim)
+            synonims_final.insert(0,True)
             return jsonify(result=synonims_final)
         if word== "garantiza":
             dicsim["asegurar"]=None
-            synonims_final.insert(0,True)
             synonims_final=list(dicsim)
+            synonims_final.insert(0,True)
             return jsonify(result=synonims_final)
         if word== "garantice":
             dicsim["asegurar"]=None
-            synonims_final.insert(0,True)
             synonims_final=list(dicsim)
+            synonims_final.insert(0,True)
             return jsonify(result=synonims_final)
         if word== "contraer":
             dicsim["adquirir"]=None
-            synonims_final.insert(0,True)
             synonims_final=list(dicsim)
+            synonims_final.insert(0,True)
             return jsonify(result=synonims_final)
         if word== "crónicos":
             dicsim["grave"]=None
-            synonims_final.insert(0,True)
             synonims_final=list(dicsim)
+            synonims_final.insert(0,True)
             return jsonify(result=synonims_final)
         if word== "vulnerables":
             dicsim["débil"]=None
+            synonims_final=list(dicsim)
             synonims_final.insert(0,True)
             synonims_final=list(dicsim)
             return jsonify(result=synonims_final)
         if word== "discapacidad":
             dicsim["discapacidad"]=None
+            synonims_final=list(dicsim)
             synonims_final.insert(0,True)
             return jsonify(result=synonims_final)
         if word== "vacuna" or word== "vacunas":
             dicsim["inyecciones"]=None
             dicsim["inmunización"]=None
-            synonims_final.insert(0,True)
             synonims_final=list(dicsim)
+            synonims_final.insert(0,True)
             return jsonify(result=synonims_final)
         else:
             dis2 = 0
