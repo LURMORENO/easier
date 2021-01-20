@@ -51,11 +51,11 @@ export class ResultComponent implements OnInit {
     let text = document.querySelector("#text");
     let regex = new RegExp(`\\b${word}\\b`, 'gi');
     if (synonym2==true){
-      console.log("TRUE!")
+      //console.log("TRUE!")
       text.innerHTML = text.innerHTML.replace(regex, `<div class=word>${word}<span class=wordtext>${synonym}</span></div>`)
     }
     else{
-      console.log("FALSE!")
+      //console.log("FALSE!")
       text.innerHTML = text.innerHTML.replace(regex, `<div class=word>${word}<span class=wordtext>${word}</span></div>`)
     }
     
