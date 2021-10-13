@@ -9,6 +9,8 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import json
+from urllib.request import Request, urlopen
+from urllib.parse import quote
 
 from resources.text2tokens import text2tokens
 from models.models import Config
@@ -34,6 +36,7 @@ model.eval()
 
 app = Flask(__name__)
 CORS(app)
+
 
 @app.route('/api/complex-words', methods=['GET'])
 def get_complex_words():
@@ -164,6 +167,7 @@ def get_disambiguate():
 
         return jsonify(definition=final)
 
+
 @app.route('/api/synonyms', methods=['GET'])
 def get_synonyms():
     if request.method == 'GET':
@@ -228,6 +232,7 @@ def get_synonyms():
             synonims_final.append(word)
             return jsonify(result=synonims_final)
 
+
 @app.route('/api/definition-easy', methods=['GET'])
 def get_definition_easy():
     if request.method == 'GET':
@@ -245,14 +250,25 @@ def get_definition_easy():
         else:
             return jsonify(definition_list=definition_list)
 
+
 @app.route('/api/definition-rae', methods=['GET'])
 def get_definition_rae():
     if request.method == 'GET':
-        word = escape(request.args.get('word'))
+        word = quote(escape(request.args.get('word')))
         definition_list = list()
-        page = requests.get(url= 'https://dle.rae.es/' + word)
-        if page.status_code == 200:
-            soup = BeautifulSoup(page.text, 'html.parser')
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:92.0) Gecko/20100101 Firefox/92.0',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
+            'Accept-Encoding': 'none',
+            'Accept-Language': 'en-US,en;q=0.8',
+            'Connection': 'keep-alive'
+        }
+        url_requests = Request(url=f'https://dle.rae.es/{word}', headers=headers)
+        response = urlopen(url_requests)
+        if response.code == 200:
+            page = response.read()
+            soup = BeautifulSoup(page, 'html.parser')
             # Coger la primera definición
             definitions_content = soup.findAll('p', attrs={'class' : ['j', 'j2', 'm']})
             if definitions_content:
@@ -310,6 +326,7 @@ def get_pictogram():
 
         else:
             return jsonify(result='')
+
 
 @app.route('/api/lemmatize', methods=['GET'])
 def get_lemma():
