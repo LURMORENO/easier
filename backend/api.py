@@ -12,27 +12,27 @@ import json
 from urllib.request import Request, urlopen
 from urllib.parse import quote
 
-from resources.text2tokens import text2tokens
-from models.models import Config
-config = Config()
+#from resources.text2tokens import text2tokens
+#from models.models import Config
+#config = Config()
 
 from multiprocessing import Pool
 
 from transformers import BertForMaskedLM, BertTokenizer
 
-from inflector import Inflector,Spanish
+#from inflector import Inflector,Spanish
 import spacy
 
 nlp = spacy.load('es_core_news_md')
-inflector = Inflector(Spanish)
+#inflector = Inflector(Spanish)
 
-text2tokens = text2tokens()
+#text2tokens = text2tokens()
 
 # pool=Pool()
 
-tokenizer = BertTokenizer.from_pretrained("resources/pytorch/", do_lower_case=False)
-model = BertForMaskedLM.from_pretrained("resources/pytorch/")
-model.eval()
+#tokenizer = BertTokenizer.from_pretrained("resources/pytorch/", do_lower_case=False)
+#model = BertForMaskedLM.from_pretrained("resources/pytorch/")
+#model.eval()
 
 app = Flask(__name__)
 CORS(app)
