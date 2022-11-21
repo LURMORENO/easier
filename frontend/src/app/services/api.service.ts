@@ -66,7 +66,7 @@ export class ApiService {
   getDefinitionRae(word: string):Promise<string[]>{
     return new Promise<string[]>((resolve, reject) => {
       try {
-        this.http.get('http://35.240.56.240:5000/api/definition-rae', {
+        this.http.get('http://146.148.118.172:5000/api/definition-rae', {
           params: {
             word: word
           }
