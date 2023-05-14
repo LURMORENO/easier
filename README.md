@@ -38,3 +38,7 @@ Computer Science Department, Universidad Carlos III de Madrid, Madrid, Spain
 - J. Devlin, M. Chang, K. Lee, and K. Toutanova, “BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding,” 2019.
 - Natural Language Processing for PyTorch and TensorFlow 2.0 https://github.com/huggingface/transformers
 
+## Acknowledgments
+
+- This work is part of the R\&D\&i ACCESS2MEET (PID2020-116527RB-I0) project financed by MCIN AEI/10.13039/501100011033/, and the "Intelligent and interactive home care system for the mitigation of the COVID-19 pandemic" project (PRTR-REACT UE) awarded by CAM. CONSEJERÍA DE EDUCACIÓN E INVESTIGACION.
+
