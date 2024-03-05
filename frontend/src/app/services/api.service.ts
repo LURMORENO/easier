@@ -50,7 +50,7 @@ export class ApiService {
   getDefinitionEasy(word: string):Promise<string[]>{
     return new Promise<string[]>((resolve, reject) => {
       try {
-        this.http.get(this.url+'/definition-easy', {
+        this.http.get('http://35.187.177.74:5000/api/definition-easy', {
           params: {
             word: word
           }

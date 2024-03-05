@@ -239,13 +239,13 @@ def get_definition_easy():
         word = escape(request.args.get('word'))
 
         definition_list = list()
-        page = requests.get(url= 'http://diccionariofacil.org/diccionario/' + word + '.html')
+        page = requests.get(url= 'http://diccionariofacil.org/diccionario/' + word)
         soup = BeautifulSoup(page.text, 'html.parser')
         error_content = soup.find("div", {"id": "infoBoxArrowError3contendor"})
         if page.status_code == 200 and not error_content:
-            definitions_content = soup.findAll(True, {"class":["definicionContent font600", "definicionContent"]})
+            definitions_content = soup.findAll(True, {"class":["field-definicion"]})
             for definition_content in definitions_content:
-                definition_list.append(definition_content.text.replace("\n", "")[2:])
+                definition_list.append(definition_content.text.replace("\n", ""))
             return jsonify(definition_list=definition_list)
         else:
             return jsonify(definition_list=definition_list)
