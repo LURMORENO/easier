@@ -1,7 +1,7 @@
 from fasttext import load_model
 
 class FastText:
-    f = load_model("../backend/resources/fasttxt/cc.es.300.bin")
+    f = load_model("/app/resources/fasttxt/cc.es.300.bin")
 
     def __init__(self):
         self.data = []

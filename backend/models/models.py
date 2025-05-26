@@ -19,19 +19,19 @@ class Config(object):
         # self.trigrams = {}
         # self.totalTris = 1
 
-        path = '../backend/resources/ngrams/vocab_cs.wngram'
+        path = '/app/resources/ngrams/vocab_cs.wngram'
         self.unigrams = self.clasificadorobj.loadDic(path)
         self.totalUnis = sum(self.unigrams.values())
         self.maxValue = max(self.unigrams.values())
-        path = '../backend/resources/ngrams/2gm-0005.wngram'
+        path = '/app/resources/ngrams/2gm-0005.wngram'
         self.bigrams = self.clasificadorobj.loadDic(path)
         self.totalBis = sum(self.bigrams.values())
-        path = '../backend/resources/ngrams/3gm-0006.wngram'
+        path = '/app/resources/ngrams/3gm-0006.wngram'
         self.trigrams = self.clasificadorobj.loadDic(path)
         self.totalTris = sum(self.trigrams.values())
 
 	    # DICCIONARIOE2R
-        path = '../backend/resources/stop_words/unigram2_non_stop_words.csv'
+        path = '/app/resources/stop_words/unigram2_non_stop_words.csv'
         self.uniE2R = self.clasificadorobj.loadDic3(path)
         self.uniE2R = {}
 
@@ -45,7 +45,7 @@ class Config(object):
         self.lematizador = lemma()
 
         #PPDB
-        path = '../backend/resources/dicuniwords.csv'
+        path = '/app/resources/dicuniwords.csv'
         self.diccionarioparafrases=self.clasificadorobj.loadDicuniparafrases2(path)
 
 

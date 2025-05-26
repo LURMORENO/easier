@@ -8,7 +8,7 @@ class worddictionary:
         url = ''
         sameword = list()
         word = str(word)
-        key = open("../backend/resources/thesaurus_key.txt", "r").read()
+        key = open("/app/resources/thesaurus_key.txt", "r").read()
 
         try:
             url = "http://thesaurus.altervista.org/thesaurus/v1?word="+word+"&language=es_ES&key="+key+"&output=json"

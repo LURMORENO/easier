@@ -20,8 +20,8 @@ from sklearn.metrics import accuracy_score as ac
 from sklearn.metrics import f1_score
 from nltk.tag.stanford import StanfordPOSTagger
 from nltk.corpus import stopwords
-spanish_postagger = StanfordPOSTagger('../backend/resources/spanish.tagger',
-                                      '../backend/resources/stanford-postagger-3.8.0.jar',
+spanish_postagger = StanfordPOSTagger('/app/resources/spanish.tagger',
+                                      '/app/resources/stanford-postagger-3.8.0.jar',
                                       encoding='utf-8')
 
 
@@ -37,7 +37,7 @@ class clasificador:
         self.data = []
         self.model = self.SVMLoad()
         self.model2 = self.SVMLoad2()
-        self.diccionariorae=self.loadfrecuenciarae('../backend/resources/frecuenciasrae.csv')
+        self.diccionariorae=self.loadfrecuenciarae('/app/resources/frecuenciasrae.csv')
 
     def loadDic(self, path):
         dic = {}
@@ -510,11 +510,11 @@ class clasificador:
         print(bAcuracy,bPrecis, bRecall, bFscore, G1, f1x2)
 
     def SVMLoad(self):
-        filename = "../backend/resources/SVMModel.sav"
+        filename = "/app/resources/SVMModel.sav"
         return pickle.load(open(filename, 'rb'))
 
     def SVMLoad2(self):
-        filename = "../backend/resources/SVMModelbea.sav"
+        filename = "/app/resources/SVMModelbea.sav"
         return pickle.load(open(filename, 'rb'))
 
     def asignarDic(self,path):
