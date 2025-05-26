@@ -28,7 +28,7 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
       xmlhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
           var result = JSON.parse(this.responseText)['result']
-          var url = "http://163.117.129.208:5000/api/synonyms-v2?"
+          var url = "https://easier.hulat.uc3m.es/api/synonyms-v2?"
           for (const sentencetags of result) {
             var xml = new XMLHttpRequest();
             xml.onreadystatechange = function(){
@@ -57,7 +57,7 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
           }          
         }
       };
-      var url = `http://163.117.129.208:5000/api/complex-words?text=${info.selectionText}&flag=0`
+      var url = `https://easier.hulat.uc3m.es/api/complex-words?text=${info.selectionText}&flag=0`
       xmlhttp.open("GET", url, true)
       xmlhttp.setRequestHeader("Content-Type", "application/json")
       xmlhttp.send()
