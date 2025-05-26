@@ -254,37 +254,23 @@ def get_definition_easy():
 @app.route('/api/definition-rae', methods=['GET'])
 def get_definition_rae():
     if request.method == 'GET':
-        word = quote(escape(request.args.get('word')))
-        definition_list = list()
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:92.0) Gecko/20100101 Firefox/92.0',
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-            'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
-            'Accept-Encoding': 'none',
-            'Accept-Language': 'en-US,en;q=0.8',
-            'Connection': 'keep-alive'
-        }
-        url_requests = Request(url=f'https://dle.rae.es/{word}', headers=headers)
-        response = urlopen(url_requests)
-        if response.code == 200:
-            page = response.read()
-            soup = BeautifulSoup(page, 'html.parser')
-            # Coger la primera definición
-            definitions_content = soup.findAll('p', attrs={'class' : ['j', 'j2', 'm']})
-            if definitions_content:
-                for definition_content in definitions_content:
-                    definition_content = re.findall('.*?[.]', definition_content.text)
-                    definition = ""
-                    for i in definition_content:
-                        if(len(i) > 8):
-                            definition += i
-                    definition = definition.strip()
-                    definition_list.append(definition)  
-                return jsonify(definition_list=definition_list)  
-            else:
-                return jsonify(definition_list=definition_list)
-        else:
-            return jsonify(definition_list=definition_list)
+        word = escape(request.args.get('word'))
+        api_url = f"https://rae-api.com/api/words/{word}"
+        response = request.get(api_url)
+
+        definition_list = []
+
+        if response.status_code == 200:
+            data = response.json()
+            meanings = data.get("data", {}).get("meanings", [])
+            if meanings:
+                senses = meanings[0].get("senses", [])
+                if senses:
+                    # Coger la primera definición
+                    first_definition = senses[0].get("raw", "").strip()
+                    if first_definition:
+                        definition_list.append(first_definition)
+        return jsonify(definition_list=definition_list)
 
 
 @app.route('/api/pictogram', methods=['GET'])
