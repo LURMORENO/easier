@@ -64,9 +64,9 @@ def get_complex_words():
             if flag=='1':
                 predictedtags = [config.clasificadorobj.SVMPredict(rowdeploy) for rowdeploy in matrix_deploy]
                 print("entro en easier")
-            elif flag=='0':
+            elif flag=='0': # ??
                 predictedtags = [config.clasificadorobj.SVMPredict2(rowdeploy) for rowdeploy in matrix_deploy]
-                print("entro en bea")
+                print("entro en bea") # TODO: wtf is the bea flag??
         if flag=='1':
             for j in range(0, len(words)):
                 sentencetags = words[j]
@@ -80,7 +80,7 @@ def get_complex_words():
                         if  numsil >4:
                             complex_words.append(sentencetags[i])
                             print(numsil)
-        elif flag=='0':    
+        elif flag=='0': # TODO: again bea??
             for j in range(0, len(words)):
                 sentencetags = words[j]
                 for i in range(0, len(sentencetags)):
@@ -111,6 +111,9 @@ def get_disambiguate():
         definition_list = json.loads(definition_list)
 
         phrase = phrase.replace(word, "[MASK]")
+        # CLS and SEP are specials tokens used in BERT Models
+        # CLS stands for Classification Token: the model does a vectorial representation and uses it
+        # as a summary of the entire phrase. SEP stands for separator: used for separating sequences
         phrase = "[CLS] " + phrase + " [SEP]"
 
         tokens = tokenizer.tokenize(phrase)
@@ -256,7 +259,7 @@ def get_definition_rae():
     if request.method == 'GET':
         word = escape(request.args.get('word'))
         api_url = f"https://rae-api.com/api/words/{word}"
-        response = request.get(api_url)
+        response = requests.get(api_url)
 
         definition_list = []
 

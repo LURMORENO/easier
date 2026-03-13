@@ -1,3 +1,8 @@
+"""
+This file contains the configuration used in the API. It is in charge of loading the
+classificator (a word is complex or not), the unigrams, bigrams and trigrams
+"""
+
 import torch
 
 from resources.clasificador import clasificador
@@ -32,6 +37,7 @@ class Config(object):
 
 	    # DICCIONARIOE2R
         path = '/app/resources/stop_words/unigram2_non_stop_words.csv'
+        #TODO: this variable is being overwritten??
         self.uniE2R = self.clasificadorobj.loadDic3(path)
         self.uniE2R = {}
 

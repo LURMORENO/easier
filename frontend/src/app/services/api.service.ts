@@ -8,8 +8,8 @@ import { catchError, retry } from 'rxjs/operators';
 })
 export class ApiService {
 
-  url = "https://easier.hulat.uc3m.es/api"
-  //url = "http://127.0.0.1:5000/api"
+  //url = "https://easier.hulat.uc3m.es/gcloud-api"
+  url = "http://127.0.0.1:5000/api"
 
   constructor(private http: HttpClient) { }
 
@@ -50,7 +50,7 @@ export class ApiService {
   getDefinitionEasy(word: string):Promise<string[]>{
     return new Promise<string[]>((resolve, reject) => {
       try {
-        this.http.get('https://easier.hulat.uc3m.es/gcloud-api/definition-easy', {
+        this.http.get(this.url+'/definition-easy', {
           params: {
             word: word
           }
@@ -66,7 +66,7 @@ export class ApiService {
   getDefinitionRae(word: string):Promise<string[]>{
     return new Promise<string[]>((resolve, reject) => {
       try {
-        this.http.get('https://easier.hulat.uc3m.es/gcloud-api/definition-rae', {
+        this.http.get(this.url+'/definition-rae', {
           params: {
             word: word
           }

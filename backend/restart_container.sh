@@ -1,13 +1,23 @@
 #!/bin/bash
 
 # Stop and delete the container if it exists
-docker stop easier-api && docker rm -f easier-api
+docker stop easier-api 2>/dev/null
+docker rm easier-api 2>/dev/null
 
-# Build docker image
+# Remove previous image
+docker rmi easier-backend 2>/dev/null
+
+# Build image
 docker build -t easier-backend .
 
-# Run a new container
-docker run -d -p 5000:5000 --name easier-api easier-backend
+# Create container (do not start yet)
+docker create -p 5000:5000 --name easier-api easier-backend
 
-# Show real time logs
+# Copy models/resources into container
+docker cp resources/. easier-api:/app/resources/
+
+# Start container
+docker start easier-api
+
+# Show logs
 docker logs -f easier-api

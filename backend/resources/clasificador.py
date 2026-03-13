@@ -24,6 +24,13 @@ spanish_postagger = StanfordPOSTagger('/app/resources/spanish.tagger',
                                       '/app/resources/stanford-postagger-3.8.0.jar',
                                       encoding='utf-8')
 
+# Download NLTK data with error handling to avoid issues with --preload
+try:
+    nltk.download('punkt', quiet=True)
+    nltk.download('stopwords', quiet=True)
+except Exception as e:
+    # Data might already exist or be downloaded by another process
+    pass
 
 class clasificador:
     def __init__(self):
@@ -273,6 +280,7 @@ class clasificador:
                     lastprob=prob
             return lastprob
 
+    # TODO: this doens't seem to be used
     def getMatrix_train(self, path, trigrams, totalTris, bigrams, unigrams, totalBis, totalUnis,E2Rgram):
 
         numExamples = self.getLinesFile(path)

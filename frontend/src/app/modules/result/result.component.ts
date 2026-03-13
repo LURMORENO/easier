@@ -47,6 +47,9 @@ export class ResultComponent implements OnInit {
     }
   }
 
+  // Esta función no reemplaza nada realmente. Lo que hace es, en caso de haber un sinónimo,
+  // añade un div para que, al hacer hover, este se renderice con el sinónimo en cuestión. Si
+  // no hay un sinónimo, inserta la misma palabra en el contenedor.
   replaceComplexWords(word: string, synonym?: string,synonym2?: boolean){
     let text = document.querySelector("#text");
     let regex = new RegExp(`\\b${word}\\b`, 'gi');
@@ -74,6 +77,8 @@ export class ResultComponent implements OnInit {
     });
   }
 
+  // TODO: getSynonims parece que se ejecuta dos veces, lo cual es ineficiente. Se podría hacer 
+  // un diccionario compartido para disminuir la latencia
   async toggleDictionary(word: string) {
     //Obtener definicion y sinonimo
     if(! this.selected){
