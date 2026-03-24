@@ -4,8 +4,10 @@ classificator (a word is complex or not), the unigrams, bigrams and trigrams
 """
 
 import torch
+import os
 
 from resources.clasificador import clasificador
+from resources.ngram_store import load_ngram_resource
 from resources.worddictionarybabel import worddictionarybabel
 from resources.worddictionary import worddictionary
 from resources.lemma import lemma
@@ -13,6 +15,8 @@ from resources.lemma import lemma
 class Config(object):
     def __init__(self):
         self.clasificadorobj = clasificador()
+        # otherwise, it will use the default behaviour with dicts - not wanted!
+        ngrams_backend = os.getenv('NGRAMS_BACKEND', 'dict').strip().lower()
         
         # self.unigrams = {}
         # self.totalUnis = 1
@@ -25,15 +29,15 @@ class Config(object):
         # self.totalTris = 1
 
         path = '/app/resources/ngrams/vocab_cs.wngram'
-        self.unigrams = self.clasificadorobj.loadDic(path)
-        self.totalUnis = sum(self.unigrams.values())
-        self.maxValue = max(self.unigrams.values())
+        self.unigrams = self._load_ngram(path, ngrams_backend)
+        self.totalUnis = self.unigrams.total_count if hasattr(self.unigrams, 'total_count') else sum(self.unigrams.values())
+        self.maxValue = self.unigrams.max_freq if hasattr(self.unigrams, 'max_freq') else max(self.unigrams.values())
         path = '/app/resources/ngrams/2gm-0005.wngram'
-        self.bigrams = self.clasificadorobj.loadDic(path)
-        self.totalBis = sum(self.bigrams.values())
+        self.bigrams = self._load_ngram(path, ngrams_backend)
+        self.totalBis = self.bigrams.total_count if hasattr(self.bigrams, 'total_count') else sum(self.bigrams.values())
         path = '/app/resources/ngrams/3gm-0006.wngram'
-        self.trigrams = self.clasificadorobj.loadDic(path)
-        self.totalTris = sum(self.trigrams.values())
+        self.trigrams = self._load_ngram(path, ngrams_backend)
+        self.totalTris = self.trigrams.total_count if hasattr(self.trigrams, 'total_count') else sum(self.trigrams.values())
 
 	    # DICCIONARIOE2R
         path = '/app/resources/stop_words/unigram2_non_stop_words.csv'
@@ -54,6 +58,12 @@ class Config(object):
         path = '/app/resources/dicuniwords.csv'
         self.diccionarioparafrases=self.clasificadorobj.loadDicuniparafrases2(path)
 
+    def _load_ngram(self, path, backend):
+        try:
+            return load_ngram_resource(path, backend=backend)
+        except Exception as e:
+            print('NGRAM backend fallback to dict for', path, 'due to:', str(e))
+            return self.clasificadorobj.loadDic(path)
 
 class Text(object):
 

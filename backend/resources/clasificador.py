@@ -18,11 +18,8 @@ import os
 from sklearn.metrics import precision_recall_fscore_support as pr
 from sklearn.metrics import accuracy_score as ac
 from sklearn.metrics import f1_score
-from nltk.tag.stanford import StanfordPOSTagger
 from nltk.corpus import stopwords
-spanish_postagger = StanfordPOSTagger('/app/resources/spanish.tagger',
-                                      '/app/resources/stanford-postagger-3.8.0.jar',
-                                      encoding='utf-8')
+
 
 # Download NLTK data with error handling to avoid issues with --preload
 try:

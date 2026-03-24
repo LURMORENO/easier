@@ -11,10 +11,13 @@ docker rmi easier-backend 2>/dev/null
 docker build -t easier-backend .
 
 # Create container (do not start yet)
-docker create -p 5000:5000 --name easier-api easier-backend
 
-# Copy models/resources into container
-docker cp resources/. easier-api:/app/resources/
+docker create -p 80:5000 \
+    -v "$(pwd)/resources:/app/resources" \
+    --name easier-api easier-backend \
+    -e NGRAMS_BACKEND="sqlite" \
+
+# IMPORTANT: it is necessary to raise an independent container with nginx for https
 
 # Start container
 docker start easier-api

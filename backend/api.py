@@ -24,15 +24,17 @@ from inflector import Inflector,Spanish
 import spacy
 
 nlp = spacy.load('es_core_news_md')
+nlp.add_pipe(nlp.create_pipe('sentencizer'))
 inflector = Inflector(Spanish)
 
-text2tokens = text2tokens()
+text2tokens = text2tokens(nlp)
 
 # pool=Pool()
 
-tokenizer = BertTokenizer.from_pretrained("resources/pytorch/", do_lower_case=False)
-model = BertForMaskedLM.from_pretrained("resources/pytorch/")
-model.eval()
+with torch.no_grad():
+    tokenizer = BertTokenizer.from_pretrained("resources/pytorch/", do_lower_case=False)
+    model = BertForMaskedLM.from_pretrained("resources/pytorch/")
+    model.eval()
 
 app = Flask(__name__)
 CORS(app)
@@ -66,7 +68,8 @@ def get_complex_words():
                 print("entro en easier")
             elif flag=='0': # ??
                 predictedtags = [config.clasificadorobj.SVMPredict2(rowdeploy) for rowdeploy in matrix_deploy]
-                print("entro en bea") # TODO: wtf is the bea flag??
+                print("entro en easier")
+                # TODO: wtf is the bea flag??
         if flag=='1':
             for j in range(0, len(words)):
                 sentencetags = words[j]

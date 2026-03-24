@@ -1,13 +1,24 @@
 import os
-import spacy
+import csv
+import spacy 
 import math
-from resources.clasificador import clasificador
 from nltk.stem.snowball import SnowballStemmer
 stemmer = SnowballStemmer(language='spanish')
-clasificadorobj=clasificador()
 
-class text2tokens:
-    nlp = spacy.load('es_core_news_md')
+def _load_rae_words():
+    for path in ['/app/resources/frecuenciasrae.csv',
+                 os.path.join(os.path.dirname(__file__), 'frecuenciasrae.csv')]:
+        if os.path.exists(path):
+            with open(path, 'rt', encoding='utf-8') as f:
+                return {row[1].strip() for row in csv.reader(f, delimiter=';') if len(row) > 1}
+    return set()
+
+_RAE_WORDS = _load_rae_words()
+
+class text2tokens():
+    def __init__(self, nlp_model):
+        self.nlp = nlp_model
+        self.nlp.add_pipe(self.nlp.create_pipe('sentencizer'))
 
     def text2sentences(self,text):
         lista_oraciones = list()
@@ -66,7 +77,7 @@ class text2tokens:
         return newdic
 
     def removestemraeword(self,word):
-        for element in clasificadorobj.diccionariorae:
+        for element in _RAE_WORDS:
             if word in element:
                 return True
 
