@@ -132,16 +132,14 @@ def get_disambiguate():
         if word in predicted_token:
             predicted_token.remove(word)
         
-        other_pipes = [pipe for pipe in nlp.pipe_names if pipe != "tagger"]
-        nlp.disable_pipes(*other_pipes)
+        #other_pipes = [pipe for pipe in nlp.pipe_names if pipe != "tagger"]
+        #nlp.disable_pipes(*other_pipes)
         for doc in nlp.pipe(predicted_token):
             if len(doc) > 0:
                 if doc[0].pos_=='PROPN' or doc[0].pos_=='NOUN':
                     nword=inflector.pluralize(doc[0].text)
                     newpredicted_token.append(nword)
-            newpredicted_token.append(doc)
-        for pipe_name in other_pipes:
-            nlp.enable_pipe(pipe_name)    
+            newpredicted_token.append(doc) 
         doc = nlp(phrase)
         for token in doc:
             if token.pos_ == "NOUN" and token.text!=word:
