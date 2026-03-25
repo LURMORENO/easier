@@ -12,10 +12,10 @@ docker build -t easier-backend .
 
 # Create container (do not start yet)
 
-docker create -p 80:5000 \
+docker create -p 5000:5000 \
     -v "$(pwd)/resources:/app/resources" \
-    --name easier-api easier-backend \
     -e NGRAMS_BACKEND="sqlite" \
+    --name easier-api easier-backend
 
 # IMPORTANT: it is necessary to raise an independent container with nginx for https
 

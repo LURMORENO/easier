@@ -24,7 +24,6 @@ from inflector import Inflector,Spanish
 import spacy
 
 nlp = spacy.load('es_core_news_md')
-nlp.add_pipe(nlp.create_pipe('sentencizer'))
 inflector = Inflector(Spanish)
 
 text2tokens = text2tokens(nlp)
@@ -141,6 +140,8 @@ def get_disambiguate():
                     nword=inflector.pluralize(doc[0].text)
                     newpredicted_token.append(nword)
             newpredicted_token.append(doc)
+        for pipe_name in other_pipes:
+            nlp.enable_pipe(pipe_name)    
         doc = nlp(phrase)
         for token in doc:
             if token.pos_ == "NOUN" and token.text!=word:
