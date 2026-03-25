@@ -8,6 +8,10 @@
     ],
     "rewrites": [
       {
+        "source": "/api/**",
+        "destination": "https://easier-api.hulat.uc3m.es/api/**"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }
