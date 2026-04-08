@@ -9,6 +9,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import json
+import logging
 from urllib.request import Request, urlopen
 from urllib.parse import quote
 
@@ -38,6 +39,11 @@ with torch.no_grad():
 app = Flask(__name__)
 CORS(app)
 
+# Reuse Gunicorn handlers so logs are visible in `docker logs`.
+gunicorn_logger = logging.getLogger("gunicorn.error")
+if gunicorn_logger.handlers:
+    app.logger.handlers = gunicorn_logger.handlers
+    app.logger.setLevel(gunicorn_logger.level)
 
 @app.route('/api/complex-words', methods=['GET'])
 def get_complex_words():
@@ -172,7 +178,7 @@ def get_disambiguate():
 
         return jsonify(definition=final)
 
-
+# deprecated TODO: should migrate this
 @app.route('/api/synonyms', methods=['GET'])
 def get_synonyms():
     if request.method == 'GET':
@@ -282,40 +288,45 @@ def get_definition_rae():
 def get_pictogram():
     if request.method == 'GET':
         word = request.args.get('word')
-        # Metodo que obtiene un pictograma de arasaac
-        params = {
-            's': word,
-            'idiomasearch':0,
-            'Buscar': 'Buscar',
-            'buscar_por': 1,
-            'pictogramas_color': 1,
-            'pictogramas_byn': 1,
-            'fotografia': 1,
-            'lse_color': 1
+        if not word:
+            return jsonify(result='')
+
+        # Hardcoded cases previously handled in frontend.
+        pictogram_ids = {
+            'pandemia': 30987,
+            'plataforma': 12333,
+            'mascarillas': 9169,
+            'insta': 34697,
+            'facilitar': 19522,
+            'incorporación': 8026,
+            'garantiza': 16021,
+            'garantice': 16021,
+            'contraer': 6457,
+            'crónicos': 28742,
+            'vulnerables': 4620,
         }
 
-        page = requests.get(url='http://www.arasaac.org/buscar.php', params=params)
-        if page.status_code == 200:
-            try:
-                soup = BeautifulSoup(page.text, 'html.parser')
-                # Comprobar que la palabra conincice exactamente con la imagen recupeada
-                li_list = soup.find(id="ultimas_imagenes").find_all('li')
-                if li_list is not None:
-                    for li in li_list:
-                        index = re.search(r'\d', li.text)
-                        text = li.text[:index.start()].strip()
-                        if word == text:
-                            href = li.find('a')['href']
-                            page = requests.get(url = 'http://www.arasaac.org/' + href)
-                            soup = BeautifulSoup(page.text, 'html.parser')
-                            url = soup.find(id="principal").find(class_='image')['src']
-                            url = 'http://www.arasaac.org/' + url
-                            return jsonify(result=url)
-                    return jsonify(result='')
-            except:
+        if word in pictogram_ids:
+            url = f"https://api.arasaac.org/api/pictograms/{pictogram_ids[word]}?download=false"
+            return jsonify(result=url)
+
+        try:
+            search_url = f"https://api.arasaac.org/api/pictograms/es/search/{quote(word)}"
+            response = requests.get(search_url, timeout=8)
+            if response.status_code != 200:
                 return jsonify(result='')
 
-        else:
+            candidates = response.json()
+            if not isinstance(candidates, list) or len(candidates) == 0:
+                return jsonify(result='')
+
+            word_id = candidates[0].get('_id')
+            if not word_id:
+                return jsonify(result='')
+
+            url = f"https://api.arasaac.org/api/pictograms/{word_id}?download=false"
+            return jsonify(result=url)
+        except Exception:
             return jsonify(result='')
 
 

@@ -8,8 +8,8 @@ import { catchError, retry } from 'rxjs/operators';
 })
 export class ApiService {
 
-  url = "https://easier-api.hulat.uc3m.es/api"
-  //url = "http://127.0.0.1:5000/api"
+  //url = "https://easier-api.hulat.uc3m.es/api"
+  url = "http://127.0.0.1:5000/api"
 
   constructor(private http: HttpClient) { }
 
@@ -130,86 +130,20 @@ export class ApiService {
   getPictogram(word: string):Promise<string>{
     return new Promise<string>((resolve, reject) => {
       try {
-        if(word=='pandemia'){
-          let url= `https://api.arasaac.org/api/pictograms/30987?download=false`
-         resolve(url)}
-         if(word=='plataforma'){
-          let url= `https://api.arasaac.org/api/pictograms/12333?download=false`
-         resolve(url)}
-         if(word=='mascarillas'){
-          let url= `https://api.arasaac.org/api/pictograms/9169?download=false`
-         resolve(url)}
-         if(word=='insta'){
-          let url= `https://api.arasaac.org/api/pictograms/34697?download=false`
-         resolve(url)}
-         if(word=='facilitar'){
-          let url= `https://api.arasaac.org/api/pictograms/19522?download=false`
-         resolve(url)}
-         if(word=='incorporación'){
-          let url= `https://api.arasaac.org/api/pictograms/8026?download=false`
-         resolve(url)}
-         if(word=='garantiza'){
-          let url= `https://api.arasaac.org/api/pictograms/16021?download=false`
-         resolve(url)}
-         if(word=='garantice'){
-          let url= `https://api.arasaac.org/api/pictograms/16021?download=false`
-         resolve(url)}
-         if(word=='contraer'){
-          let url= `https://api.arasaac.org/api/pictograms/6457?download=false`
-         resolve(url)}
-         if(word=='crónicos'){
-          let url= `https://api.arasaac.org/api/pictograms/28742?download=false`
-         resolve(url)}
-         if(word=='vulnerables'){
-          let url= `https://api.arasaac.org/api/pictograms/4620?download=false`
-         resolve(url)}
-         else{
-          this.http.get(`https://api.arasaac.org/api/pictograms/es/search/${word}`)
-          .subscribe((result => {
-            let word_id = result[0]['_id']
-            let url = `https://api.arasaac.org/api/pictograms/${word_id}?download=false`
-            resolve(url)}),
-
-          (error => {
-            resolve('')}))
-         }
-        /*
-        this.http.get(`https://api.arasaac.org/api/pictograms/es/search/${word}`)
-        .subscribe((result => {
-          let word_id = result[0]['_id']
-          let url = `https://api.arasaac.org/api/pictograms/${word_id}?download=false`
-          resolve(url)
-         
-
-         }
-
-          
-        }),
-        (error => {
+        this.http.get(this.url+'/pictogram', {
+          params: {
+            word: word
+          }
+        }).subscribe((result) => {
+          resolve(result['result'])
+        }, () => {
           resolve('')
-        }))
-         */
+        })
       } catch (error) {
         reject(error)
       }
     })
   }
-
-  // getPictogram(word: string):Promise<string>{
-  //   return new Promise<string>((resolve, reject) => {
-  //     try {
-  //       this.http.get(this.url+'/pictogram', {
-  //         params: {
-  //           word: word
-  //         }
-  //       }).subscribe((result => {
-  //         resolve(result['result'])
-  //       }))
-  //     } catch (error) {
-  //       reject(error)
-  //     }
-  //   })
-  // }
 
   getLemma(word: string):Promise<string>{
     return new Promise<string>((resolve, reject) => {
