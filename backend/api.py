@@ -45,6 +45,32 @@ if gunicorn_logger.handlers:
     app.logger.handlers = gunicorn_logger.handlers
     app.logger.setLevel(gunicorn_logger.level)
 
+def _get_word_pos(word):
+    if not word:
+        return None
+    doc = nlp(str(word))
+    if len(doc) == 0:
+        return None
+    return doc[0].pos_
+
+
+def _is_pos_compatible(target_pos, candidate_pos):
+    if not target_pos or not candidate_pos:
+        return True
+
+    if target_pos == 'NOUN':
+        return candidate_pos in {'NOUN', 'PROPN'}
+    if target_pos == 'PROPN':
+        return candidate_pos in {'PROPN', 'NOUN'}
+    if target_pos == 'VERB':
+        return candidate_pos == 'VERB'
+    if target_pos == 'ADJ':
+        return candidate_pos == 'ADJ'
+    if target_pos == 'ADV':
+        return candidate_pos == 'ADV'
+
+    return candidate_pos == target_pos
+
 @app.route('/api/complex-words', methods=['GET'])
 def get_complex_words():
     if request.method == 'GET':
@@ -304,6 +330,7 @@ def get_pictogram():
             'contraer': 6457,
             'crónicos': 28742,
             'vulnerables': 4620,
+            'concentración': 38796,
         }
 
         if word in pictogram_ids:
@@ -449,7 +476,13 @@ def get_synonyms_v2():
 
             dic_synonims=text2tokens.eliminarstem(dic_synonims,word.lower())
 
+            # if word is NOUN, only NOUN synonyms and so...
+            target_pos = _get_word_pos(word)
             for candidate in dic_synonims.keys():
+                candidate_pos = _get_word_pos(candidate)
+                if not _is_pos_compatible(target_pos, candidate_pos):
+                    continue
+
                 candidatesentencetags = list(sentencetags)
                 candidatesentencetags[4] = str(candidate)
                 candidatelen = len(candidate)
@@ -484,6 +517,9 @@ def get_synonyms_v2():
             else:
                 dicsim=text2tokens.removestemrae(dicsim)
                 dicsim2={k: v for k, v in sorted(dicsim.items(), key=lambda item: item[1])}
+
+            for s in dicsim2:
+                app.logger.info("%s", s)
 
             # Si se ha encontrado al menos un sinonimo se devuelven los 3 mas significativos            
             if len(dicsim2) > 0:
