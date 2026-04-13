@@ -71,11 +71,24 @@ def _is_pos_compatible(target_pos, candidate_pos):
 
     return candidate_pos == target_pos
 
+MONTHS = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", 
+          "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
+DAYS = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"]
+
 @app.route('/api/complex-words', methods=['GET'])
 def get_complex_words():
     if request.method == 'GET':
         text = request.args.get('text')
         flag = request.args.get('flag')
+
+        to_remove_words = text.split()
+        to_remove_words = [
+            word for word in to_remove_words
+            if word.lower().strip(".,;:!?¡¿") not in DAYS
+            and word.lower().strip(".,;:!?¡¿") not in MONTHS
+        ]
+
+        text = " ".join(to_remove_words)
 
         words = list()
         complex_words = list()
@@ -130,8 +143,6 @@ def get_complex_words():
                             complex_words.append(sentencetags[i])
                         else:
                             print("compleja pero menor a 1500 en diccionario rae"+" "+sentencetags[i][4])    
-                        
-                        
 
         return jsonify(result=complex_words)
 
@@ -517,9 +528,6 @@ def get_synonyms_v2():
             else:
                 dicsim=text2tokens.removestemrae(dicsim)
                 dicsim2={k: v for k, v in sorted(dicsim.items(), key=lambda item: item[1])}
-
-            for s in dicsim2:
-                app.logger.info("%s", s)
 
             # Si se ha encontrado al menos un sinonimo se devuelven los 3 mas significativos            
             if len(dicsim2) > 0:
