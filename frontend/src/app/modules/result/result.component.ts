@@ -77,8 +77,8 @@ export class ResultComponent implements OnInit {
     });
   }
 
-  // TODO: getSynonims parece que se ejecuta dos veces, lo cual es ineficiente. Se podría hacer 
-  // un diccionario compartido para disminuir la latencia
+  // getSynonyms se ejecuta dos veces. Una para obtener un único sinónimo, y otra para poder
+  // renderizar los tres sinónimos que deben de aparecer en el lateral tras clickear en la palabra
   async toggleDictionary(word: string) {
     //Obtener definicion y sinonimo
     if(! this.selected){
@@ -90,10 +90,22 @@ export class ResultComponent implements OnInit {
     let complex_word = this.complexWords.find((element => element[4] == word))
     let result = await this.mainService.api.getDefinition(word, complex_word[1])
     this.word.synonyms = await this.mainService.api.getSynonyms(word, complex_word)
-    this.word.pictogram = await this.mainService.api.getPictogram(word)
-    if(! this.word.pictogram){
-      this.word.pictogram = null
+
+    // para comprobar si un pictograma tiene sentido o no, se lanza una petición. Si las keywords
+    // o tags devuelven algo más a parte de la propia palabra, se devuelve un pictograma nulo (solo)
+    // si ningún sinónimo se corresponde tampoco
+    let picto_result = await this.mainService.api.getPictogram(word)
+    if(! picto_result){
+      for (let i = 0; i < this.word.synonyms.length; i++) {
+          let picto_result = await this.mainService.api.getPictogram(this.word.synonyms[i]);
+          if (picto_result){
+            this.word.pictogram = picto_result;
+          } else {
+            this.word.pictogram = null;
+          }
+      }
     }
+    
     this.word.word = word
     this.word.definition = result['definition']
     this.word.source = result['source']

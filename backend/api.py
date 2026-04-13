@@ -9,6 +9,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import json
+import logging
 from urllib.request import Request, urlopen
 from urllib.parse import quote
 
@@ -38,12 +39,56 @@ with torch.no_grad():
 app = Flask(__name__)
 CORS(app)
 
+# Reuse Gunicorn handlers so logs are visible in `docker logs`.
+gunicorn_logger = logging.getLogger("gunicorn.error")
+if gunicorn_logger.handlers:
+    app.logger.handlers = gunicorn_logger.handlers
+    app.logger.setLevel(gunicorn_logger.level)
+
+def _get_word_pos(word):
+    if not word:
+        return None
+    doc = nlp(str(word))
+    if len(doc) == 0:
+        return None
+    return doc[0].pos_
+
+
+def _is_pos_compatible(target_pos, candidate_pos):
+    if not target_pos or not candidate_pos:
+        return True
+
+    if target_pos == 'NOUN':
+        return candidate_pos in {'NOUN', 'PROPN'}
+    if target_pos == 'PROPN':
+        return candidate_pos in {'PROPN', 'NOUN'}
+    if target_pos == 'VERB':
+        return candidate_pos == 'VERB'
+    if target_pos == 'ADJ':
+        return candidate_pos == 'ADJ'
+    if target_pos == 'ADV':
+        return candidate_pos == 'ADV'
+
+    return candidate_pos == target_pos
+
+MONTHS = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", 
+          "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
+DAYS = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"]
 
 @app.route('/api/complex-words', methods=['GET'])
 def get_complex_words():
     if request.method == 'GET':
         text = request.args.get('text')
         flag = request.args.get('flag')
+
+        to_remove_words = text.split()
+        to_remove_words = [
+            word for word in to_remove_words
+            if word.lower().strip(".,;:!?¡¿") not in DAYS
+            and word.lower().strip(".,;:!?¡¿") not in MONTHS
+        ]
+
+        text = " ".join(to_remove_words)
 
         words = list()
         complex_words = list()
@@ -98,8 +143,6 @@ def get_complex_words():
                             complex_words.append(sentencetags[i])
                         else:
                             print("compleja pero menor a 1500 en diccionario rae"+" "+sentencetags[i][4])    
-                        
-                        
 
         return jsonify(result=complex_words)
 
@@ -172,72 +215,6 @@ def get_disambiguate():
 
         return jsonify(definition=final)
 
-
-@app.route('/api/synonyms', methods=['GET'])
-def get_synonyms():
-    if request.method == 'GET':
-        word = request.args.get('word')
-        sentencetags = request.args.get('sentencetags')
-        sentencetags = json.loads(sentencetags)
-
-        # metodo que obtiene los sinonimos de una palabra
-        dis2 = 0
-        synonims = list()
-        synonimsb = config.diccionario_babel.babelsearch(word)
-        synonims_final = list()
-
-        if len(config.dictionario_palabras.SSinonimos(word)):
-            if str(word[len(word) - 5:]) == 'mente':
-                stem = word.replace("mente", "")
-                synonims = config.dictionario_palabras.SSinonimos(stem)
-            else:
-                stem = config.lematizador.lemmatize(word)
-                synonims = config.dictionario_palabras.SSinonimos(stem)
-
-        if not synonims:
-            synonims = config.dictionario_palabras.SSinonimos(word)
-            stem = word
-    
-        synonims_total = list(synonims + synonimsb)
-        dic_synonims = dict.fromkeys(synonims_total)
-
-        for candidate in dic_synonims.keys():
-            candidatesentencetags = list(sentencetags)
-            candidatesentencetags[4] = str(candidate)
-            candidatelen = len(candidate)
-            wordlen = len(word)
-            candidatesentencetags[3] = candidatesentencetags[2] + candidatelen
-            candidatesentencetags[1] = str(candidatesentencetags[1])[
-                :candidatesentencetags[2]] + str(candidate) + \
-                candidatesentencetags[1][
-                candidatesentencetags[2] + wordlen:]
-
-            listcandidatesentencetags = list()
-            listcandidatesentencetags.append(candidatesentencetags)
-    
-            # Buscar el sinonimo optimo
-            dis1 = config.clasificadorobj.word2vector.similarity(candidate, word)
-            window = config.clasificadorobj.getWindow(word, sentencetags[1], sentencetags[2])
-            diswindow1 = config.clasificadorobj.word2vector.similarity(window[1], candidate)
-            diswindow2 = config.clasificadorobj.word2vector.similarity(window[2], candidate)
-            dis3 = dis1 + diswindow1 + diswindow2
-
-            if dis2 < dis3 and word != candidate.lower():
-                dis2 = dis3
-                wordreplace = candidatesentencetags[4]
-                if wordreplace:
-                    synonims_final.append(wordreplace)
-
-        # Si se ha encontrado al menos un sinonimo se devuelven los 3 mas significativos            
-        if len(synonims_final) > 0:
-            return jsonify(result=synonims_final[:3])
-        # Si no se ha encontrado ningun sinonimo se devuelve una lista con
-        # la palabra original
-        else:
-            synonims_final.append(word)
-            return jsonify(result=synonims_final)
-
-
 @app.route('/api/definition-easy', methods=['GET'])
 def get_definition_easy():
     if request.method == 'GET':
@@ -282,40 +259,56 @@ def get_definition_rae():
 def get_pictogram():
     if request.method == 'GET':
         word = request.args.get('word')
-        # Metodo que obtiene un pictograma de arasaac
-        params = {
-            's': word,
-            'idiomasearch':0,
-            'Buscar': 'Buscar',
-            'buscar_por': 1,
-            'pictogramas_color': 1,
-            'pictogramas_byn': 1,
-            'fotografia': 1,
-            'lse_color': 1
+        if not word:
+            return jsonify(result='')
+
+        # Hardcoded cases previously handled in frontend.
+        pictogram_ids = {
+            'pandemia': 30987,
+            'plataforma': 12333,
+            'mascarillas': 9169,
+            'insta': 34697,
+            'facilitar': 19522,
+            'incorporación': 8026,
+            'garantiza': 16021,
+            'garantice': 16021,
+            'contraer': 6457,
+            'crónicos': 28742,
+            'vulnerables': 4620,
+            'concentración': 38796,
         }
 
-        page = requests.get(url='http://www.arasaac.org/buscar.php', params=params)
-        if page.status_code == 200:
-            try:
-                soup = BeautifulSoup(page.text, 'html.parser')
-                # Comprobar que la palabra conincice exactamente con la imagen recupeada
-                li_list = soup.find(id="ultimas_imagenes").find_all('li')
-                if li_list is not None:
-                    for li in li_list:
-                        index = re.search(r'\d', li.text)
-                        text = li.text[:index.start()].strip()
-                        if word == text:
-                            href = li.find('a')['href']
-                            page = requests.get(url = 'http://www.arasaac.org/' + href)
-                            soup = BeautifulSoup(page.text, 'html.parser')
-                            url = soup.find(id="principal").find(class_='image')['src']
-                            url = 'http://www.arasaac.org/' + url
-                            return jsonify(result=url)
-                    return jsonify(result='')
-            except:
+        if word in pictogram_ids:
+            url = f"https://api.arasaac.org/api/pictograms/{pictogram_ids[word]}?download=false"            
+            return jsonify(result=url)
+
+        try:
+            app.logger.info("%s", word)
+            search_url = f"https://api.arasaac.org/api/pictograms/es/search/{quote(word)}"
+            lemma = text2tokens.lematizar(word) # e.g. conversaciones -> conversación
+            response = requests.get(search_url, timeout=8)
+            if response.status_code != 200:
                 return jsonify(result='')
 
-        else:
+            candidates = response.json()
+            if not isinstance(candidates, list) or len(candidates) == 0:
+                return jsonify(result='')
+
+            # si la keywoard no es un lemma - "no nos interesa". Forzamos una desambiguación
+            # para así evitar palabras con resultados extraños como "concentración" -> picto de
+            # "campo de concentración"     
+            keywords = candidates[0].get('keywords', [])
+            keyword_list = [kw.get('keyword') for kw in keywords]    
+            if lemma not in keyword_list:
+                return jsonify(result='')
+
+            word_id = candidates[0].get('_id')
+            if not word_id:
+                return jsonify(result='')
+
+            url = f"https://api.arasaac.org/api/pictograms/{word_id}?download=false"
+            return jsonify(result=url)
+        except Exception:
             return jsonify(result='')
 
 
@@ -329,8 +322,8 @@ def get_lemma():
         return jsonify(result=lemma)
 
 
-@app.route('/api/synonyms-v2', methods=['GET'])
-def get_synonyms_v2():
+@app.route('/api/synonyms', methods=['GET'])
+def get_synonyms():
     if request.method == 'GET':
         word = request.args.get('word')
         sentencetags = request.args.get('sentencetags')
@@ -438,7 +431,13 @@ def get_synonyms_v2():
 
             dic_synonims=text2tokens.eliminarstem(dic_synonims,word.lower())
 
+            # if word is NOUN, only NOUN synonyms and so...
+            target_pos = _get_word_pos(word)
             for candidate in dic_synonims.keys():
+                candidate_pos = _get_word_pos(candidate)
+                if not _is_pos_compatible(target_pos, candidate_pos):
+                    continue
+
                 candidatesentencetags = list(sentencetags)
                 candidatesentencetags[4] = str(candidate)
                 candidatelen = len(candidate)
