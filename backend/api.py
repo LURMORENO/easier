@@ -279,17 +279,27 @@ def get_pictogram():
         }
 
         if word in pictogram_ids:
-            url = f"https://api.arasaac.org/api/pictograms/{pictogram_ids[word]}?download=false"
+            url = f"https://api.arasaac.org/api/pictograms/{pictogram_ids[word]}?download=false"            
             return jsonify(result=url)
 
         try:
+            app.logger.info("%s", word)
             search_url = f"https://api.arasaac.org/api/pictograms/es/search/{quote(word)}"
+            lemma = text2tokens.lematizar(word) # e.g. conversaciones -> conversación
             response = requests.get(search_url, timeout=8)
             if response.status_code != 200:
                 return jsonify(result='')
 
             candidates = response.json()
             if not isinstance(candidates, list) or len(candidates) == 0:
+                return jsonify(result='')
+
+            # si la keywoard no es un lemma - "no nos interesa". Forzamos una desambiguación
+            # para así evitar palabras con resultados extraños como "concentración" -> picto de
+            # "campo de concentración"     
+            keywords = candidates[0].get('keywords', [])
+            keyword_list = [kw.get('keyword') for kw in keywords]    
+            if lemma not in keyword_list:
                 return jsonify(result='')
 
             word_id = candidates[0].get('_id')
