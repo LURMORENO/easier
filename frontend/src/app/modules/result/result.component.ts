@@ -104,6 +104,8 @@ export class ResultComponent implements OnInit {
             this.word.pictogram = null;
           }
       }
+    } else {
+      this.word.pictogram = picto_result;
     }
     
     this.word.word = word
