@@ -22,5 +22,6 @@ docker create -p 5000:5000 \
 # Start container
 docker start easier-api
 
+docker network connect easier-network easier-api
 # Show logs
 docker logs -f easier-api

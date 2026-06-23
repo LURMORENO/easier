@@ -1,4 +1,4 @@
-cat > /home/jmartinpizarro/backend/setup_certs.sh << 'EOF'
+cat > /home/javiermp/backend/setup_certs.sh << 'EOF'
 #!/bin/bash
 
 DOMAIN="easier-api.hulat.uc3m.es"
@@ -57,5 +57,5 @@ echo ""
 echo "=== DONE: Ahora ejecuta ./run_nginx.sh ==="
 EOF
 
-chmod +x /home/jmartinpizarro/backend/setup_certs.sh
+chmod +x /home/javiermp/backend/setup_certs.sh
 echo "Script creado. Ejecuta con: sudo ./setup_certs.sh"
