@@ -1,4 +1,5 @@
 docker run -d \
+  --restart unless-stopped \
   --name nginx-proxy \
   --network easier-network \
   -p 80:80 -p 443:443 \
