@@ -15,6 +15,7 @@ docker build -t easier-backend .
 docker create --restart unless-stopped -p 5000:5000 \
     -v "$(pwd)/resources:/app/resources" \
     -e NGRAMS_BACKEND="sqlite" \
+    --network easier-network \
     --name easier-api easier-backend
 
 # IMPORTANT: it is necessary to raise an independent container with nginx for https
