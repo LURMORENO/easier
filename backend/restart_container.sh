@@ -12,7 +12,7 @@ docker build -t easier-backend .
 
 # Create container (do not start yet)
 
-docker create -p 5000:5000 \
+docker create --restart unless-stopped -p 5000:5000 \
     -v "$(pwd)/resources:/app/resources" \
     -e NGRAMS_BACKEND="sqlite" \
     --name easier-api easier-backend
