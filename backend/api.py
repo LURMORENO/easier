@@ -1,5 +1,5 @@
 import torch
-
+import unicodedata
 from flask import Flask, request, Response
 from flask_cors import CORS
 from flask import jsonify
@@ -23,6 +23,9 @@ from transformers import BertForMaskedLM, BertTokenizer
 
 from inflector import Inflector,Spanish
 import spacy
+import re
+
+MAX_RAE_SENSES = 10
 
 nlp = spacy.load('es_core_news_md')
 inflector = Inflector(Spanish)
@@ -221,7 +224,12 @@ def get_definition_easy():
         word = escape(request.args.get('word'))
 
         definition_list = list()
-        page = requests.get(url= 'http://diccionariofacil.org/diccionario/' + word)
+
+        clean_word = str(word).strip().lower()
+        letter = ''.join(c for c in unicodedata.normalize('NFD', clean_word[:1]) if unicodedata.category(c) != 'Mn')
+        page = requests.get(
+            url='https://diccionariofacil.org/diccionario/' + requests.utils.quote(letter) + '/' + requests.utils.quote(clean_word, safe=''),
+            timeout=10)
         soup = BeautifulSoup(page.text, 'html.parser')
         error_content = soup.find("div", {"id": "infoBoxArrowError3contendor"})
         if page.status_code == 200 and not error_content:
@@ -233,25 +241,45 @@ def get_definition_easy():
             return jsonify(definition_list=definition_list)
 
 
+def _clean_rae_sense(sense):
+    """Acepcion sin numeracion ni etiquetas (1.a., tr., Derecho...) y con 1 ejemplo."""
+    description = (sense.get("description") or "").strip()
+    if not description:
+        raw = (sense.get("raw") or "").strip()
+        description = re.sub(r"^\d+\.[a-z]?\.?\s*", "", raw)
+    description = description.rstrip(". ")
+    if not description:
+        return ""
+    text = description + "."
+    examples = sense.get("examples") or []
+    if examples:
+        text += " " + str(examples[0]).strip()
+    return text
+
+
 @app.route('/api/definition-rae', methods=['GET'])
 def get_definition_rae():
     if request.method == 'GET':
         word = escape(request.args.get('word'))
         api_url = f"https://rae-api.com/api/words/{word}"
-        response = requests.get(api_url)
-
         definition_list = []
+        try:
+            response = requests.get(api_url, timeout=10)
+        except requests.RequestException:
+            return jsonify(definition_list=definition_list)
 
         if response.status_code == 200:
             data = response.json()
             meanings = data.get("data", {}).get("meanings", [])
-            if meanings:
-                senses = meanings[0].get("senses", [])
-                if senses:
-                    # Coger la primera definición
-                    first_definition = senses[0].get("raw", "").strip()
-                    if first_definition:
-                        definition_list.append(first_definition)
+            for meaning in meanings:
+                for sense in meaning.get("senses", []):
+                    text = _clean_rae_sense(sense)
+                    if text:
+                        definition_list.append(text)
+                    if len(definition_list) >= MAX_RAE_SENSES:
+                        break
+                if len(definition_list) >= MAX_RAE_SENSES:
+                    break
         return jsonify(definition_list=definition_list)
 
 
