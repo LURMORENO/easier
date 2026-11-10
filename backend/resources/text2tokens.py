@@ -3,6 +3,11 @@ import csv
 import spacy 
 import math
 from nltk.stem.snowball import SnowballStemmer
+import re
+
+
+_CLITICOS_RE = re.compile(r"^(?P<stem>.+?)(?:(?:se|me|te|nos|os|le|les)?(?:lo|la|los|las)|se|me|te|nos|os|le|les)$")
+_ACENTOS = str.maketrans("áéíóú", "aeiou")
 stemmer = SnowballStemmer(language='spanish')
 
 def _load_rae_words():
@@ -50,8 +55,29 @@ class text2tokens():
 
     def lematizar(self, word):
         palabra = self.nlp(word)
+        lemma = palabra[0].lemma_
 
-        return palabra[0].lemma_
+
+        if lemma.lower() == word.strip().lower():
+            verbo = self._verbo_sin_clitico(word)
+            if verbo:
+                return verbo
+
+        return lemma
+
+    def _verbo_sin_clitico(self, word):
+        """convertirlos -> convertir; dárselo -> dar. Solo infinitivos; si no lo
+        reconoce como verbo devuelve None y el lema queda como estaba."""
+        m = _CLITICOS_RE.match(word.strip().lower())
+        if not m:
+            return None
+        stem = m.group("stem").translate(_ACENTOS)
+        if len(stem) < 3 or not stem.endswith(("ar", "er", "ir")):
+            return None
+        doc = self.nlp(stem)
+        if len(doc) == 1 and doc[0].pos_ in ("VERB", "AUX") and doc[0].lemma_ == stem:
+            return stem
+        return None
 
     def getroot(self,word):
         lenword=len(word)/2
