@@ -23,7 +23,8 @@ _RAE_WORDS = _load_rae_words()
 class text2tokens():
     def __init__(self, nlp_model):
         self.nlp = nlp_model
-        self.nlp.add_pipe(self.nlp.create_pipe('sentencizer'))
+        if not any(name in self.nlp.pipe_names for name in ["parser", "sentencizer", "senter"]):
+            self.nlp.add_pipe(self.nlp.create_pipe('sentencizer'))
 
     def text2sentences(self,text):
         lista_oraciones = list()
